@@ -3,8 +3,12 @@
     "C:/Program Files/KiCad/10.0/bin/python.exe" layout/route.py eda/s6la8.kicad_pcb [passes]
 
 In1.Cu is a solid GND plane and In2.Cu a solid 3.3 V plane; both are handed to
-the router as power layers so it never runs signals through them.  Locked
-tracks are kept, everything else is ripped and rerouted.  The recipe (power
+the router as power layers so it never runs signals through them.
+
+Known limit: the Freerouting build used here only succeeds on a board with no
+existing tracks.  With locked or kept wiring it hits an internal
+NullPointerException and writes an empty session file, so plane vias cannot
+be placed first and protected, and a completion-only pass does not work.  The recipe (power
 layers, rules file, single-threaded optimiser) comes from an earlier board.
 """
 import os
@@ -97,8 +101,7 @@ def main(path, passes="20", keep=""):
 
     cmd = [FREEROUTING, "-de", dsn, "-do", ses, "-mp", passes, "-dr", rules, "-mt", "1"]
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=7200)
-    for line in ((r.stdout or "") + (r.stderr or "")).splitlines()[-8:]:
-        print("   ", line[:200])
+    open(os.path.join(work, "freerouting.log"), "w", encoding="utf-8").write((r.stdout or "") + (r.stderr or ""))
     if not os.path.exists(ses):
         raise SystemExit("Freerouting produced no session file")
 
