@@ -1,0 +1,55 @@
+# build outputs
+build/
+out/
+*.ihx
+*.lk
+*.lst
+*.map
+*.mem
+*.rel
+*.rst
+*.sym
+*.asm
+*.fw
+*.iic
+*.vcd
+*.fst
+*.vvp
+sim_build/
+results.xml
+__pycache__/
+*.pyc
+
+# Xilinx ISE
+*.ngc
+*.ngd
+*.ncd
+*.pcf
+*.bit
+*.bin
+*.bgn
+*.twr
+*.twx
+_xmsgs/
+xst/
+xlnx_auto_0_xdb/
+
+# KiCad
+*-backups/
+*.kicad_prl
+fp-info-cache
+*.lck
+~*.lck
+
+# fetched third-party trees
+/host/libsigrok/
+/.tools/
+
+# Zener and layout scratch
+.pcb/
+/hardware/out/
+/hardware/eda/layout.log
+/hardware/eda/snapshot.layout.json
+/hardware/eda/default.net
+*.dsn
+*.ses

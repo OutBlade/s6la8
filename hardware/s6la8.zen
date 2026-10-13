@@ -1,0 +1,468 @@
+"""
+s6la8: 8-channel logic analyzer, CY7C68013A (FX2LP) + XC6SLX9 (Spartan-6).
+
+Signal flow: probes -> series R + ESD -> 74LVC8T245 (input side on the target's
+VREF) -> FPGA.  A 74LVC245 also copies the buffered probes onto FX2 port B, so
+stock fx2lafw firmware works with the FPGA unconfigured; the FX2 switches that
+buffer off (FB_OE_N high) before the FPGA drives the FIFO bus.
+"""
+
+load("./lib/pins.zen", "PINS")
+load("@stdlib/board_config.zen", "BASE_4L_NETCLASSES", "BoardConfig", "Constraints", "Copper", "DesignRules", "NetClass")
+
+Resistor = Module("@stdlib/generics/Resistor.zen")
+Capacitor = Module("@stdlib/generics/Capacitor.zen")
+Inductor = Module("@stdlib/generics/Inductor.zen")
+FerriteBead = Module("@stdlib/generics/FerriteBead.zen")
+Led = Module("@stdlib/generics/Led.zen")
+Crystal = Module("@stdlib/generics/Crystal.zen")
+PinHeader = Module("@stdlib/generics/PinHeader.zen")
+MountingHole = Module("@stdlib/generics/MountingHole.zen")
+Fiducial = Module("@stdlib/generics/Fiducial.zen")
+
+# ---------------------------------------------------------------- rails
+VBUS = Power("VBUS", voltage="5V")
+V5 = Power("V5", voltage="5V")
+VCC_3V3 = Power("VCC_3V3", voltage="3.3V")
+VCC_1V2 = Power("VCC_1V2", voltage="1.2V")
+AVCC = Power("AVCC", voltage="3.3V")
+VCCA = Power("VCCA", voltage="1.65V to 5.5V")
+GND = Ground("GND")
+
+
+def part(name, symbol, footprint, pins, prefix="U"):
+    """Place a project-local part; every pin not listed is left open."""
+    all_pins = {n: NotConnected() for n in PINS[symbol]}
+    for k in pins:
+        if k not in all_pins:
+            error("%s: %s has no pin named %s" % (name, symbol, k))
+    all_pins.update(pins)
+    Component(
+        name=name,
+        symbol=Symbol(library="lib/%s.kicad_sym" % symbol),
+        footprint=File("lib/%s.kicad_mod" % footprint),
+        prefix=prefix,
+        pins=all_pins,
+    )
+
+
+def R(name, value, a, b, package="0402"):
+    Resistor(name=name, value=value, package=package, P1=a, P2=b)
+
+
+def C(name, value, a, b=GND, package="0402"):
+    Capacitor(name=name, value=value, package=package, P1=a, P2=b)
+
+
+def decouple(prefix, rail, count, bulk=None):
+    for i in range(count):
+        C("%s_%d" % (prefix, i), "100nF", rail)
+    if bulk:
+        C("%s_BULK" % prefix, bulk, rail, package="0805")
+
+
+# ---------------------------------------------------------------- USB input
+USB_DP = Net("USB_D_P")
+USB_DN = Net("USB_D_N")
+CC1 = Net()
+CC2 = Net()
+
+part("J_USB", "USB_C_Receptacle_USB2.0_16P", "USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal", {
+    "VBUS": VBUS,
+    "GND": GND,
+    "SHIELD": GND,
+    "CC1": CC1,
+    "CC2": CC2,
+    "D+": USB_DP,
+    "D-": USB_DN,
+}, prefix="J")
+R("R_CC1", "5.1k", CC1, GND)
+R("R_CC2", "5.1k", CC2, GND)
+part("U_ESD_USB", "USBLC6-2SC6", "SOT-23-6", {"I/O1": USB_DP, "I/O2": USB_DN, "VBUS": VBUS, "GND": GND})
+FerriteBead(name="FB_VBUS", package="0805", P1=VBUS, P2=V5)
+C("C_V5_A", "10uF", V5, package="0805")
+C("C_V5_B", "100nF", V5)
+
+# ---------------------------------------------------------------- supplies
+# TLV62569: VFB = 0.6 V, VOUT = 0.6 V * (1 + RTOP / RBOT)   (datasheet eq. 1)
+SW_3V3 = Power("SW_3V3")
+FB_3V3 = Net()
+part("U_REG_3V3", "TLV62569DBV", "SOT-23-5", {"VIN": V5, "EN": V5, "GND": GND, "SW": SW_3V3, "FB": FB_3V3})
+Inductor(name="L_3V3", value="2.2uH", package="1210", mpn="DFE322512F-2R2M=P2", manufacturer="Murata", P1=SW_3V3, P2=VCC_3V3)
+R("R_3V3_TOP", "453k", VCC_3V3, FB_3V3)
+R("R_3V3_BOT", "100k", FB_3V3, GND)
+C("C_3V3_IN", "10uF", V5, package="0805")
+C("C_3V3_OUT_A", "22uF", VCC_3V3, package="0805")
+C("C_3V3_OUT_B", "22uF", VCC_3V3, package="0805")
+
+SW_1V2 = Power("SW_1V2")
+FB_1V2 = Net()
+part("U_REG_1V2", "TLV62569DBV", "SOT-23-5", {"VIN": V5, "EN": V5, "GND": GND, "SW": SW_1V2, "FB": FB_1V2})
+Inductor(name="L_1V2", value="2.2uH", package="1210", mpn="DFE322512F-2R2M=P2", manufacturer="Murata", P1=SW_1V2, P2=VCC_1V2)
+R("R_1V2_TOP", "100k", VCC_1V2, FB_1V2)
+R("R_1V2_BOT", "100k", FB_1V2, GND)
+C("C_1V2_IN", "10uF", V5, package="0805")
+C("C_1V2_OUT_A", "22uF", VCC_1V2, package="0805")
+C("C_1V2_OUT_B", "22uF", VCC_1V2, package="0805")
+
+LED_PWR_A = Net()
+R("R_LED_PWR", "1k", VCC_3V3, LED_PWR_A)
+Led(name="D_PWR", color="green", package="0603", A=LED_PWR_A, K=GND)
+
+# ---------------------------------------------------------------- shared buses
+FD = [Net("FD%d" % i) for i in range(8)]
+IFCLK = Net()
+IFCLK_SRC = Net()
+SLWR = Net()
+SLRD = Net()
+SLOE = Net()
+PKTEND = Net()
+FIFOADR0 = Net()
+FIFOADR1 = Net()
+FLAGA = Net()
+FLAGB = Net()
+FLAGC = Net()
+PROGRAM_B = Net()
+INIT_B = Net()
+DONE = Net()
+M0 = Net()
+M1 = Net()
+CCLK = Net()
+CCLK_SRC = Net()
+REG_MOSI = Net()
+REG_MISO = Net()
+REG_CS_N = Net()
+FPGA_IRQ_N = Net()
+FB_OE_N = Net()
+MODE = Net()
+SCL = Net()
+SDA = Net()
+
+# ---------------------------------------------------------------- FX2LP
+XTALIN = Net()
+XTALOUT = Net()
+FX2_RESET_N = Net()
+FX2_WAKEUP = Net()
+LED_USB = Net()
+LED_USB_A = Net()
+
+fx2 = {
+    "VCC": VCC_3V3,
+    "AVCC": AVCC,
+    "GND": GND,
+    "AGND": GND,
+    "RESERVED": GND,
+    "D+": USB_DP,
+    "D-": USB_DN,
+    "XTALIN": XTALIN,
+    "XTALOUT": XTALOUT,
+    "~{RESET}": FX2_RESET_N,
+    "WAKEUP": FX2_WAKEUP,
+    "SCL": SCL,
+    "SDA": SDA,
+    "IFCLK": IFCLK_SRC,
+    "RDY0/SLRD": SLRD,
+    "RDY1/SLWR": SLWR,
+    "CTL0/FLAGA": FLAGA,
+    "CTL1/FLAGB": FLAGB,
+    "CTL2/FLAGC": FLAGC,
+    "PA0/~{INT0}": FPGA_IRQ_N,
+    "PA1/~{INT1}": LED_USB,
+    "PA2/SLOE": SLOE,
+    "PA3/WU2": FB_OE_N,
+    "PA4/FIOADDR0": FIFOADR0,
+    "PA5/FIOADDR1": FIFOADR1,
+    "PA6/PKTEND": PKTEND,
+    "PA7/FLAGD/~{SLCS}": MODE,
+    "PD0/FD8": PROGRAM_B,
+    "PD1/FD9": INIT_B,
+    "PD2/FD10": DONE,
+    "PD3/FD11": M0,
+    "PD4/FD12": CCLK_SRC,
+    "PD5/FD13": REG_MOSI,
+    "PD6/FD14": REG_MISO,
+    "PD7/FD15": REG_CS_N,
+}
+for i in range(8):
+    fx2["PB%d/FD%d" % (i, i)] = FD[i]
+part("U_FX2", "CY7C68013A-56PVX", "SSOP-56_7.5x18.5mm_P0.635mm", fx2)
+
+Crystal(name="Y_FX2", package="3225_4Pin", frequency="24MHz", load_capacitance="12pF", XIN=XTALIN, XOUT=XTALOUT, GND=GND)
+C("C_XTALIN", "18pF", XTALIN)
+C("C_XTALOUT", "18pF", XTALOUT)
+R("R_FX2_RESET", "100k", VCC_3V3, FX2_RESET_N)
+C("C_FX2_RESET", "1uF", FX2_RESET_N)
+R("R_FX2_WAKEUP", "10k", VCC_3V3, FX2_WAKEUP)
+FerriteBead(name="FB_AVCC", package="0603", P1=VCC_3V3, P2=AVCC)
+C("C_AVCC_A", "100nF", AVCC)
+C("C_AVCC_B", "2.2uF", AVCC, package="0603")
+decouple("C_FX2", VCC_3V3, 5, bulk="4.7uF")
+R("R_IFCLK", "33ohms", IFCLK_SRC, IFCLK)
+R("R_CCLK", "33ohms", CCLK_SRC, CCLK)
+R("R_LED_USB", "1k", LED_USB, LED_USB_A)
+Led(name="D_USB", color="yellow", package="0603", A=LED_USB_A, K=GND)
+
+# Safe idle levels while the FPGA is unconfigured.
+R("R_SLWR", "10k", VCC_3V3, SLWR)
+R("R_SLRD", "10k", VCC_3V3, SLRD)
+R("R_SLOE", "10k", VCC_3V3, SLOE)
+R("R_PKTEND", "10k", VCC_3V3, PKTEND)
+R("R_FIFOADR0", "10k", FIFOADR0, GND)
+R("R_FIFOADR1", "10k", FIFOADR1, GND)
+R("R_FB_OE", "10k", FB_OE_N, GND)
+R("R_MODE", "10k", VCC_3V3, MODE)
+PinHeader(name="J_MODE", pins=2, rows=1, mount="THT", P1=MODE, P2=GND)
+
+# Boot EEPROM.  A0 high selects the two-byte-address probe of the FX2 loader.
+part("U_EEPROM", "24LC128", "SOIC-8_3.9x4.9mm_P1.27mm", {
+    "VCC": VCC_3V3,
+    "GND": GND,
+    "A0": VCC_3V3,
+    "A1": GND,
+    "A2": GND,
+    "WP": GND,
+    "SCL": SCL,
+    "SDA": SDA,
+})
+R("R_SCL", "2.2k", VCC_3V3, SCL)
+R("R_SDA", "2.2k", VCC_3V3, SDA)
+C("C_EEPROM", "100nF", VCC_3V3)
+
+# ---------------------------------------------------------------- front end
+CH_IN = [Net("CH%d_IN" % i) for i in range(8)]
+CH_A = [Net("CH%d_A" % i) for i in range(8)]
+CH = [Net("CH%d" % i) for i in range(8)]
+VREF_T = Net()
+EXT_CLK_IN = Net()
+EXT_CLK_A = Net()
+EXT_CLK = Net()
+TRIG_IN = Net()
+TRIG_A = Net()
+TRIG = Net()
+
+probe = {}
+for i in range(8):
+    probe["P%d" % (2 * i + 1)] = CH_IN[i]
+    probe["P%d" % (2 * i + 2)] = GND
+probe.update({"P17": VREF_T, "P18": GND, "P19": EXT_CLK_IN, "P20": TRIG_IN})
+PinHeader(name="J_PROBE", pins=10, rows=2, mount="THT", orientation="Horizontal", **probe)
+
+# VCCA source: jumper 1-2 = target VREF, 2-3 = local 3.3 V.
+PinHeader(name="J_VREF", pins=3, rows=1, mount="THT", P1=VREF_T, P2=VCCA, P3=VCC_3V3)
+C("C_VCCA_A", "100nF", VCCA)
+C("C_VCCA_B", "1uF", VCCA)
+
+for i in range(8):
+    R("R_CH%d" % i, "100ohms", CH_IN[i], CH_A[i])
+    R("R_CH%d_PD" % i, "100k", CH_A[i], GND)
+for i in range(4):
+    part("U_ESD_CH%d" % i, "USBLC6-2SC6", "SOT-23-6", {"I/O1": CH_A[2 * i], "I/O2": CH_A[2 * i + 1], "VBUS": VCCA, "GND": GND})
+
+fe = {"V_{CCA}": VCCA, "V_{CCB}": VCC_3V3, "GND": GND, "DIR": VCCA, "~{OE}": GND}
+for i in range(8):
+    fe["A%d" % (i + 1)] = CH_A[i]
+    fe["B%d" % (i + 1)] = CH[i]
+part("U_FE", "SN74LVC8T245", "TSSOP-24_4.4x7.8mm_P0.65mm", fe)
+C("C_FE", "100nF", VCC_3V3)
+
+R("R_EXT_CLK", "100ohms", EXT_CLK_IN, EXT_CLK_A)
+R("R_EXT_CLK_PD", "100k", EXT_CLK_A, GND)
+R("R_TRIG", "100ohms", TRIG_IN, TRIG_A)
+R("R_TRIG_PD", "100k", TRIG_A, GND)
+part("U_FE_AUX", "SN74LVC2T45DCUR", "VSSOP-8_2.3x2mm_P0.5mm", {
+    "VCCA": VCCA,
+    "VCCB": VCC_3V3,
+    "GND": GND,
+    "DIR": VCCA,
+    "A1": EXT_CLK_A,
+    "A2": TRIG_A,
+    "B1": EXT_CLK,
+    "B2": TRIG,
+})
+C("C_FE_AUX", "100nF", VCC_3V3)
+
+# fx2lafw fallback: buffered probes onto FX2 port B through 33R.
+FB = [Net("FB%d" % i) for i in range(8)]
+fb = {"VCC": VCC_3V3, "GND": GND, "DIR": VCC_3V3, "~{OE}": FB_OE_N}
+for i in range(8):
+    fb["A%d" % (i + 1)] = CH[i]
+    fb["B%d" % (i + 1)] = FB[i]
+    R("R_FB%d" % i, "33ohms", FB[i], FD[i])
+part("U_FALLBACK", "SN74LVC245APW", "TSSOP-20_4.4x6.5mm_P0.65mm", fb)
+C("C_FALLBACK", "100nF", VCC_3V3)
+
+# ---------------------------------------------------------------- SDRAM
+SD_DQ = [Net("SD_DQ%d" % i) for i in range(16)]
+SD_A = [Net("SD_A%d" % i) for i in range(13)]
+SD = {n: Net("SD_" + n) for n in ["BA0", "BA1", "CS_N", "RAS_N", "CAS_N", "WE_N", "CKE", "CLK", "DQML", "DQMH"]}
+
+sdram = {
+    "VDD": VCC_3V3,
+    "VDDQ": VCC_3V3,
+    "VSS": GND,
+    "VSSQ": GND,
+    "BA0": SD["BA0"],
+    "BA1": SD["BA1"],
+    "~{CS}": SD["CS_N"],
+    "~{RAS}": SD["RAS_N"],
+    "~{CAS}": SD["CAS_N"],
+    "~{WE}": SD["WE_N"],
+    "CKE": SD["CKE"],
+    "CLK": SD["CLK"],
+    "DQML": SD["DQML"],
+    "DQMH": SD["DQMH"],
+}
+for i in range(16):
+    sdram["DQ%d" % i] = SD_DQ[i]
+for i in range(13):
+    sdram["A%d" % i] = SD_A[i]
+part("U_SDRAM", "MT48LC16M16A2P", "TSOP-II-54_22.2x10.16mm_P0.8mm", sdram)
+decouple("C_SDRAM", VCC_3V3, 7, bulk="10uF")
+
+# ---------------------------------------------------------------- FPGA
+CLK50 = Net()
+CLK50_SRC = Net()
+TCK = Net()
+TDI = Net()
+TDO = Net()
+TMS = Net()
+HSWAPEN = Net()
+CSI_B = Net()
+RDWR_B = Net()
+LED1_K = Net()
+LED2_K = Net()
+LED1_A = Net()
+LED2_A = Net()
+
+# SDRAM pins are assigned in physical order so the bus does not cross itself:
+# the SDRAM's left column faces the FPGA's right side (bank 1), its right
+# column wraps over the top to bank 0.  Both lists run top to bottom.
+SD_LEFT = SD_DQ[0:8] + [SD[k] for k in ["DQML", "WE_N", "CAS_N", "RAS_N", "CS_N", "BA0", "BA1"]] + [SD_A[10]] + SD_A[0:4]
+FPGA_RIGHT = ["L1P", "L1N_VREF", "L32P", "L32N", "L33P", "L33N", "L34P", "L34N", "L40P_GCLK11", "L40N_GCLK10", "L41P_GCLK9_IRDY1", "L41N_GCLK8", "L42P_GCLK7", "L42N_GCLK6_TRDY1", "L43P_GCLK5", "L43N_GCLK4", "L45P", "L45N", "L46P", "L46N"]
+SD_RIGHT = [SD_DQ[i] for i in [15, 14, 13, 12, 11, 10, 9, 8]] + [SD["DQMH"], SD["CLK"], SD["CKE"], SD_A[12], SD_A[11], SD_A[9], SD_A[8], SD_A[7], SD_A[6], SD_A[5], SD_A[4]]
+FPGA_TOP = ["L66N_SCP0", "L66P_SCP1", "L65N_SCP2", "L65P_SCP3", "L64N_SCP4", "L64P_SCP5", "L63N_SCP6", "L63P_SCP7", "L62N_VREF", "L62P", "L37N_GCLK12", "L37P_GCLK13", "L36N_GCLK14", "L36P_GCLK15", "L35N_GCLK16", "L35P_GCLK17", "L34N_GCLK18", "L34P_GCLK19", "L4N"]
+check(len(SD_LEFT) == len(FPGA_RIGHT) and len(SD_RIGHT) == len(FPGA_TOP), "SDRAM pin lists do not match")
+sd_pins = ["IO_%s_1" % p for p in FPGA_RIGHT] + ["IO_%s_0" % p for p in FPGA_TOP]
+sd_nets = SD_LEFT + SD_RIGHT
+
+fpga = {
+    "VCCINT": VCC_1V2,
+    "VCCAUX": VCC_3V3,
+    "VCCO_0": VCC_3V3,
+    "VCCO_1": VCC_3V3,
+    "VCCO_2": VCC_3V3,
+    "VCCO_3": VCC_3V3,
+    "GND": GND,
+    "SUSPEND": GND,
+    "PROGRAM_B_2": PROGRAM_B,
+    "DONE_2": DONE,
+    "TCK": TCK,
+    "TDI": TDI,
+    "TDO": TDO,
+    "TMS": TMS,
+    "IO_L1P_HSWAPEN_0": HSWAPEN,
+    # bank 2: FX2 side.  FD is wired MSB-first onto D0..D7 for SelectMAP.
+    "IO_L3P_D0_DIN_MISO_MISO1_2": FD[7],
+    "IO_L12P_D1_MISO2_2": FD[6],
+    "IO_L12N_D2_MISO3_2": FD[5],
+    "IO_L49P_D3_2": FD[4],
+    "IO_L49N_D4_2": FD[3],
+    "IO_L62P_D5_2": FD[2],
+    "IO_L62N_D6_2": FD[1],
+    "IO_L48P_D7_2": FD[0],
+    "IO_L30N_GCLK0_USERCCLK_2": IFCLK,
+    "IO_L1P_CCLK_2": CCLK,
+    "IO_L65P_INIT_B_2": INIT_B,
+    "IO_L1N_M0_CMPMISO_2": M0,
+    "IO_L13P_M1_2": M1,
+    "IO_L3N_MOSI_CSI_B_MISO0_2": CSI_B,
+    "IO_L48N_RDWR_B_VREF_2": RDWR_B,
+    "IO_L65N_CSO_B_2": SLWR,
+    "IO_L64N_D9_2": SLRD,
+    "IO_L64P_D8_2": SLOE,
+    "IO_L31N_GCLK30_D15_2": PKTEND,
+    "IO_L31P_GCLK31_D14_2": FLAGA,
+    "IO_L30P_GCLK1_D13_2": FLAGB,
+    "IO_L14N_D12_2": FLAGC,
+    "IO_L14P_D11_2": FIFOADR0,
+    "IO_L13N_D10_2": FIFOADR1,
+    "IO_L2N_CMPMOSI_2": REG_MOSI,
+    "IO_L2P_CMPCLK_2": REG_CS_N,
+    # bank 3: front end, clocks, status
+    "IO_L52N_3": CH[0],
+    "IO_L52P_3": CH[1],
+    "IO_L51N_3": CH[2],
+    "IO_L51P_3": CH[3],
+    "IO_L50N_3": CH[4],
+    "IO_L50P_3": CH[5],
+    "IO_L49N_3": CH[6],
+    "IO_L49P_3": CH[7],
+    "IO_L44P_GCLK21_3": CLK50,
+    "IO_L43P_GCLK23_3": EXT_CLK,
+    "IO_L42P_GCLK25_TRDY2_3": TRIG,
+    "IO_L37P_3": REG_MISO,
+    "IO_L37N_3": FPGA_IRQ_N,
+    "IO_L36P_3": FB_OE_N,
+    "IO_L36N_3": LED1_K,
+    "IO_L2P_3": LED2_K,
+}
+for i in range(len(sd_nets)):
+    fpga[sd_pins[i]] = sd_nets[i]
+part("U_FPGA", "XC6SLX9-TQG144", "TQFP-144_20x20mm_P0.5mm", fpga)
+
+decouple("C_VCCINT", VCC_1V2, 5, bulk="4.7uF")
+decouple("C_VCCAUX", VCC_3V3, 5, bulk="4.7uF")
+decouple("C_VCCO", VCC_3V3, 11, bulk="10uF")
+
+R("R_PROGRAM_B", "4.7k", VCC_3V3, PROGRAM_B)
+R("R_INIT_B", "4.7k", VCC_3V3, INIT_B)
+R("R_DONE", "330ohms", VCC_3V3, DONE)
+R("R_M0", "4.7k", VCC_3V3, M0)
+R("R_M1", "4.7k", VCC_3V3, M1)
+R("R_HSWAPEN", "1k", HSWAPEN, GND)
+R("R_CSI_B", "1k", CSI_B, GND)
+R("R_RDWR_B", "1k", RDWR_B, GND)
+
+part("Y_FPGA", "ASE-xxxMHz", "Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm", {"Vdd": VCC_3V3, "GND": GND, "EN": VCC_3V3, "OUT": CLK50_SRC}, prefix="Y")
+R("R_CLK50", "33ohms", CLK50_SRC, CLK50)
+C("C_OSC", "100nF", VCC_3V3)
+
+R("R_LED1", "1k", VCC_3V3, LED1_A)
+Led(name="D_LED1", color="green", package="0603", A=LED1_A, K=LED1_K)
+R("R_LED2", "1k", VCC_3V3, LED2_A)
+Led(name="D_LED2", color="red", package="0603", A=LED2_A, K=LED2_K)
+
+PinHeader(name="J_JTAG", pins=6, rows=1, mount="THT", P1=VCC_3V3, P2=GND, P3=TCK, P4=TDO, P5=TDI, P6=TMS)
+
+# ---------------------------------------------------------------- mechanical
+for i in range(4):
+    MountingHole(name="H%d" % (i + 1), diameter="M3", P1=GND)
+for i in range(3):
+    Fiducial(name="FID%d" % (i + 1))
+
+# Two stock footprints need slightly tighter rules than the 4-layer defaults:
+# the VSSOP-8 has 0.15 mm between pads, and the USB-C receptacle's locating
+# holes sit 0.194 mm from its shell pads.  Both are within JLCPCB's limits.
+Board(
+    name="s6la8",
+    path="eda",
+    layers=4,
+    schematic=True,
+    solder_mask_color="#101010E6",
+    config=BoardConfig(
+        design_rules=DesignRules(
+            constraints=Constraints(copper=Copper(copper_to_hole_clearance=0.19)),
+            netclasses=[
+                NetClass(
+                    name="Default",
+                    clearance=0.15,
+                    track_width=0.16,
+                    via_diameter=0.45,
+                    via_drill=0.2,
+                    diff_pair_width=0.2,
+                    diff_pair_gap=0.2,
+                ),
+            ] + BASE_4L_NETCLASSES[1:],
+        ),
+    ),
+)

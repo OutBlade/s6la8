@@ -1,0 +1,8 @@
+[workspace]
+repository = "github.com/OutBlade/s6la8"
+pcb-version = "0.4"
+
+[board]
+name = "s6la8"
+path = "s6la8.zen"
+description = "8-channel FX2LP + Spartan-6 logic analyzer for sigrok"

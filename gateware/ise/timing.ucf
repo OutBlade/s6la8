@@ -1,0 +1,18 @@
+# Timing constraints for s6la8.  Pin locations are in pins.ucf (generated).
+
+NET "CLK50" TNM_NET = "clk50";
+TIMESPEC "TS_clk50" = PERIOD "clk50" 20 ns HIGH 50 %;
+NET "IFCLK" TNM_NET = "ifclk";
+TIMESPEC "TS_ifclk" = PERIOD "ifclk" 20.833 ns HIGH 50 %;
+
+# FX2LP synchronous slave FIFO, IFCLK sourced by the FX2 (datasheet 38-08032,
+# tables 22 and 25).  Outputs must be valid tSWR / tSFD / tSPE before the next
+# IFCLK edge; flags are valid tXFLG = 9.5 ns after an edge.
+NET "SLWR"   OFFSET = OUT 10.4 ns AFTER "IFCLK";   # 20.83 - 10.4 (tSWR)
+NET "FD<*>"  OFFSET = OUT 11.6 ns AFTER "IFCLK";   # 20.83 - 9.2  (tSFD)
+NET "PKTEND" OFFSET = OUT 6.2 ns  AFTER "IFCLK";   # 20.83 - 14.6 (tSPE)
+NET "FLAGB"  OFFSET = IN 11.3 ns VALID 20.8 ns BEFORE "IFCLK";
+
+# The two clock domains only meet in the asynchronous FIFO.
+TIMESPEC "TS_cdc_a" = FROM "clk50" TO "ifclk" TIG;
+TIMESPEC "TS_cdc_b" = FROM "ifclk" TO "clk50" TIG;

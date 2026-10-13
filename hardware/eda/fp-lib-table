@@ -1,0 +1,12 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "OutBlade_s6la8_lib") (type "KiCad") (uri "${KIPRJMOD}/../lib") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_Capacitor_SMD") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/Capacitor_SMD.pretty") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_Connector_PinHeader_2.54mm") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/Connector_PinHeader_2.54mm.pretty") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_Crystal") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/Crystal.pretty") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_Fiducial") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/Fiducial.pretty") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_Inductor_SMD") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/Inductor_SMD.pretty") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_LED_SMD") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/LED_SMD.pretty") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_MountingHole") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/MountingHole.pretty") (options "") (descr ""))
+  (lib (name "stdlib_kicad-footprints_Resistor_SMD") (type "KiCad") (uri "${KIPRJMOD}/../.pcb/stdlib/kicad-footprints/Resistor_SMD.pretty") (options "") (descr ""))
+)
