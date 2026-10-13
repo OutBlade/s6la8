@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         iverilog verilator yosys \
         autoconf automake libtool check \
         libglib2.0-dev libzip-dev libusb-1.0-0-dev \
-        srecord xxd \
+        srecord xxd openjdk-25-jre-headless \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m venv /opt/venv \

@@ -99,7 +99,17 @@ def main(path, passes="20", keep=""):
     if os.path.exists(ses):
         os.remove(ses)
 
-    cmd = [FREEROUTING, "-de", dsn, "-do", ses, "-mp", passes, "-dr", rules, "-mt", "1"]
+    if os.environ.get("FREEROUTING_CLI"):
+        # Freerouting 2.5 jar on Java 25, run in the dev container (the jar
+        # goes in .tools/freerouting; its native CLI build crashes on start).
+        # Tried on this board: 175 connections left open after 15 passes,
+        # against 17 with the older desktop build, so it is not the default.
+        repo = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(path)), "..", ".."))
+        cmd = ["docker", "run", "--rm", "-v", repo + ":/work", "-w", "/work/hardware/out/route", "s6la8-dev",
+               "java", "-Djava.awt.headless=true", "-jar", "/work/.tools/freerouting/freerouting.jar", "-de", "s6la8.dsn", "-do", "s6la8.ses",
+               "-mp", passes, "-dr", "s6la8.rules", "-mt", "1"]
+    else:
+        cmd = [FREEROUTING, "-de", dsn, "-do", ses, "-mp", passes, "-dr", rules, "-mt", "1"]
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=7200)
     open(os.path.join(work, "freerouting.log"), "w", encoding="utf-8").write((r.stdout or "") + (r.stderr or ""))
     if not os.path.exists(ses):
