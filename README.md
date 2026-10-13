@@ -14,7 +14,7 @@ this repository has run on real hardware. **Do not order this board yet.**
 | Part | State |
 |---|---|
 | Schematic (`hardware/s6la8.zen`) | Complete, 155 parts. Builds cleanly; not yet reviewed by a second person |
-| PCB layout (`hardware/eda/s6la8.kicad_pcb`) | Placed and autorouted. KiCad DRC: 0 errors, 340 warnings (mostly silkscreen overlaps), **17 connections still open** (two signal nets, a few FPGA 3.3 V and ground pads, isolated pour islands). No signal-integrity review. See "Layout" below |
+| PCB layout (`hardware/eda/s6la8.kicad_pcb`) | Placed and autorouted. KiCad DRC: 0 errors, 340 warnings (mostly silkscreen overlaps), **14 connections still open** (the `SLOE` net, five FPGA 3.3 V and ground pads on its bottom row that are boxed in by neighbouring escape routes, and the pour islands attached to them). No signal-integrity review. See "Layout" below |
 | FX2 firmware (`firmware/`) | Compiles with SDCC (about 3.3 KB of code). Never run |
 | FPGA gateware (`gateware/`) | Streaming and a 32 K-sample triggered buffer pass simulation. No ISE build yet, so the pinout and timing are unverified. The SDRAM deep buffer is not implemented |
 | libsigrok driver (`host/driver/`) | Compiles against libsigrok. Never run against a device |
@@ -49,13 +49,15 @@ pcb layout hardware/s6la8.zen          # sync footprints and nets (Zener)
 python layout/place.py eda/s6la8.kicad_pcb     # seed placement
 python layout/route.py eda/s6la8.kicad_pcb     # Freerouting
 python layout/fanout.py eda/s6la8.kicad_pcb    # plane vias
+python layout/patch.py ...                     # grid router for leftovers (see file)
 ```
 
 (`place.py`, `route.py` and `fanout.py` run with KiCad's bundled Python.)
 
 What still has to happen before this layout can be trusted:
 
-1. Close the remaining open connections by hand in KiCad.
+1. Close the remaining open connections by hand in KiCad. They need
+   neighbouring tracks moved, which none of the scripted passes can do.
 2. Build the gateware in Xilinx ISE to confirm the FPGA accepts this pinout.
 3. Review the critical routes: the USB pair, IFCLK, the SDRAM bus, the buck
    converters' switching loops, decoupling placement.
