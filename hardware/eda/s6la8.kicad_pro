@@ -406,5 +406,10 @@
       "version": 0
     },
     "tuning_profiles_impedance_geometric": []
+  },
+  "erc": {
+    "rule_severities": {
+      "power_pin_not_driven": "warning"
+    }
   }
 }
