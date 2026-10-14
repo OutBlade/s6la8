@@ -3,11 +3,14 @@
     python layout/patch_solve.py out/patch_in.json out/drc.json out/patch_out.json
 
 Input comes from `patch.py dump` and KiCad's DRC report; output goes to
-`patch.py apply`.  All other-net copper on F.Cu and B.Cu is rasterised at
-0.05 mm with clearance and each open connection is searched with A*.  Pads on
-a plane net only need to reach a spot where a via fits.  When a pad is boxed
-in, one nearby signal net at a time is lifted, the pad is connected, and the
-lifted net is routed again; the change is kept only if both succeed.
+`patch.py rip` and `patch.py apply`.  Other-net copper on F.Cu and B.Cu is
+rasterised at 0.05 mm with clearance and each open connection is searched with
+A*.  Pads on a plane net only need to reach a spot where a via fits.
+
+When a pad is boxed in, neighbouring signal nets are moved out of the way:
+first only the piece of a net that lies near the pad is cut out and its loose
+ends are joined again around the new copper, then, if that fails, a whole net
+is lifted and routed again.  A change is kept only if everything reconnects.
 """
 import heapq
 import itertools
@@ -23,7 +26,13 @@ GRID = 0.05
 TRACK_W, VIA_D, CLR = 0.16, 0.45, 0.152
 PLANE_NETS = ("GND", "VCC_3V3")
 LAYERS = ("F.Cu", "B.Cu")
-LIFT = int(os.environ.get("LIFT", "1"))      # how many nets may be lifted at once for a boxed-in pad
+LIFT = int(os.environ.get("LIFT", "2"))      # how many nets may be cut at once for a boxed-in pad
+VERBOSE = bool(os.environ.get("VERBOSE"))
+MARGIN = 7.0                                 # a search may stray this far (mm) from its end points
+
+
+def key(x, y):
+    return (round(x, 3), round(y, 3))
 
 
 def main(src, drc, out):
@@ -34,13 +43,22 @@ def main(src, drc, out):
     def cell(x, y):
         return int(round((x - x0) / GRID)), int(round((y - y0) / GRID))
 
-    def raster(net, grow):
-        """blocked[layer][y, x] for copper of other nets, inflated by grow."""
-        blk = {l: np.zeros((H, W), dtype=bool) for l in LAYERS}
-        m = int(1.0 / GRID)
-        for l in LAYERS:                          # keep off the board edge
-            blk[l][:m, :] = blk[l][-m:, :] = True
-            blk[l][:, :m] = blk[l][:, -m:] = True
+    def raster(net, grow, win):
+        """blocked[layer][y, x] for copper of other nets, inflated by grow.
+        Everything outside the window win = (xa, ya, xb, yb) counts as blocked."""
+        wa, wb = cell(win[0], win[1]), cell(win[2], win[3])
+        m = int(1.0 / GRID)                       # keep off the board edge
+        ia, ja = max(wa[0], m), max(wa[1], m)
+        ib, jb = min(wb[0], W - m), min(wb[1], H - m)
+        blk = {}
+        for l in LAYERS:
+            blk[l] = np.ones((H, W), dtype=bool)
+            blk[l][ja:jb, ia:ib] = False
+        pad = grow + 1.0
+
+        def outside(ax, ay, bx, by):
+            return max(ax, bx) < win[0] - pad or min(ax, bx) > win[2] + pad or \
+                   max(ay, by) < win[1] - pad or min(ay, by) > win[3] + pad
 
         def box(l, ax, ay, bx, by):
             i0, j0 = cell(ax - grow, ay - grow)
@@ -63,14 +81,14 @@ def main(src, drc, out):
             blk[l][j0:j1 + 1, i0:i1 + 1] |= np.hypot(X - (ax + t * dx), Y - (ay + t * dy)) < r
 
         for (ax, ay, bx, by, pnet, th, layer) in d["pads"]:
-            if pnet != net:
+            if pnet != net and not outside(ax, ay, bx, by):
                 for l in (LAYERS if th else (layer,)):
                     box(l, ax, ay, bx, by)
         for (ax, ay, bx, by, hw, snet, layer) in d["segs"]:
-            if snet != net and layer in blk:
+            if snet != net and layer in blk and not outside(ax, ay, bx, by):
                 capsule(layer, ax, ay, bx, by, hw)
         for (vx, vy, vr, vnet) in d["vias"]:
-            if vnet != net:
+            if vnet != net and not outside(vx, vy, vx, vy):
                 for l in LAYERS:
                     capsule(l, vx, vy, vx, vy, vr)
         return blk
@@ -78,10 +96,13 @@ def main(src, drc, out):
     reach = [""]                                   # where the last failed search got to
 
     def route(net, src_pt, dst_pt, lead=0.6):
-        """A* from src to dst, or with dst None to the nearest via site.
-        Returns (tracks, vias) or None."""
-        trk = raster(net, CLR + TRACK_W / 2)
-        via = raster(net, CLR + VIA_D / 2)
+        """A* from src to dst, or with dst None to the nearest via site at
+        least `lead` mm of track away.  Returns (tracks, vias) or None."""
+        ends = [src_pt, dst_pt or src_pt]
+        win = (min(e[0] for e in ends) - MARGIN, min(e[1] for e in ends) - MARGIN,
+               max(e[0] for e in ends) + MARGIN, max(e[1] for e in ends) + MARGIN)
+        trk = raster(net, CLR + TRACK_W / 2, win)
+        via = raster(net, CLR + VIA_D / 2, win)
         via_free = ~(via["F.Cu"] | via["B.Cu"])
         si, sj = cell(src_pt[0], src_pt[1])
         start = (LAYERS.index(src_pt[2]), sj, si)
@@ -160,19 +181,90 @@ def main(src, drc, out):
         for (x, y, net) in vias:
             d["vias"].append([x, y, VIA_D / 2, net])
 
-    def reroute_net(net):
-        """Route a lifted signal net again, every pad to the first one."""
-        pts = [((ax + bx) / 2, (ay + by) / 2, "F.Cu" if th else layer)
-               for (ax, ay, bx, by, pnet, th, layer) in d["pads"] if pnet == net]
+    def groups(net):
+        """Which copper of a net hangs together: returns node(point) -> group id."""
+        par = {}
+
+        def find(a):
+            par.setdefault(a, a)
+            while par[a] != a:
+                par[a] = par[par[a]]
+                a = par[a]
+            return a
+
+        centre = {}
+        segs = [s for s in d["segs"] if s[5] == net]
+        for s in segs:
+            par[find((key(s[0], s[1]), s[6]))] = find((key(s[2], s[3]), s[6]))
+        for v in d["vias"]:
+            if v[3] == net:
+                par[find((key(v[0], v[1]), "F.Cu"))] = find((key(v[0], v[1]), "B.Cu"))
+        for n, (ax, ay, bx, by, pnet, th, layer) in enumerate(d["pads"]):
+            if pnet != net:
+                continue
+            centre[key((ax + bx) / 2, (ay + by) / 2)] = ("pad", n)
+            for s in segs:
+                for x, y in ((s[0], s[1]), (s[2], s[3])):
+                    if ax - 0.01 <= x <= bx + 0.01 and ay - 0.01 <= y <= by + 0.01 and (th or layer == s[6]):
+                        par[find(("pad", n))] = find((key(x, y), s[6]))
+        return lambda pt: find(centre.get(key(pt[0], pt[1]), (key(pt[0], pt[1]), pt[2])))
+
+    def join(net, terms):
+        """Reconnect the loose ends of a net: each to the first one, or failing
+        that to any other copper of the net that is not part of the same piece."""
         tracks, vias = [], []
-        for k in range(1, len(pts)):
-            r = route(net, pts[k], pts[0])
+        for k in range(1, len(terms)):
+            group = groups(net)
+            if group(terms[k]) == group(terms[0]):
+                continue                           # still joined some other way
+            others = [((ax + bx) / 2, (ay + by) / 2, "F.Cu" if th else layer)
+                      for (ax, ay, bx, by, pnet, th, layer) in d["pads"] if pnet == net]
+            others += [(v[0], v[1], "F.Cu") for v in d["vias"] if v[3] == net]
+            others = [o for o in others if group(o) != group(terms[k])]
+            others.sort(key=lambda o: math.hypot(o[0] - terms[k][0], o[1] - terms[k][1]))
+            for target in [terms[0]] + others[:6]:
+                r = route(net, terms[k], target)
+                if r:
+                    break
             if r is None:
                 return None
             commit(*r)
             tracks += r[0]
             vias += r[1]
         return tracks, vias
+
+    def lift(net, c=None, R=None):
+        """Take copper of a net off the model: all of it, or what lies within
+        R of c.  Returns (segments, vias, terminals to join again)."""
+        def near(x, y):
+            return c is None or math.hypot(x - c[0], y - c[1]) < R
+        rs = [s for s in d["segs"] if s[5] == net and (near(s[0], s[1]) or near(s[2], s[3]))]
+        rv = [v for v in d["vias"] if v[3] == net and near(v[0], v[1])]
+        ids = set(map(id, rs)) | set(map(id, rv))
+        d["segs"] = [s for s in d["segs"] if id(s) not in ids]
+        d["vias"] = [v for v in d["vias"] if id(v) not in ids]
+        pads = [((ax + bx) / 2, (ay + by) / 2, "F.Cu" if th else layer, (ax, ay, bx, by))
+                for (ax, ay, bx, by, pnet, th, layer) in d["pads"] if pnet == net]
+        if c is None:
+            return rs, rv, [p[:3] for p in pads]
+        cut = {}                                   # points where removed copper ended -> its layer
+        for s in rs:
+            cut[key(s[0], s[1])] = cut[key(s[2], s[3])] = s[6]
+        for v in rv:
+            cut.setdefault(key(v[0], v[1]), "F.Cu")
+        terms = {}
+        for s in d["segs"]:
+            if s[5] == net:
+                for x, y in ((s[0], s[1]), (s[2], s[3])):
+                    if key(x, y) in cut:
+                        terms.setdefault(key(x, y), (x, y, s[6]))
+        for v in d["vias"]:
+            if v[3] == net and key(v[0], v[1]) in cut:
+                terms.setdefault(key(v[0], v[1]), (v[0], v[1], cut[key(v[0], v[1])]))
+        for px, py, pl, (ax, ay, bx, by) in pads:
+            if any(ax - 1e-3 <= kx <= bx + 1e-3 and ay - 1e-3 <= ky <= by + 1e-3 for kx, ky in cut):
+                terms.setdefault(key(px, py), (px, py, pl))
+        return rs, rv, list(terms.values())
 
     jobs = []
     for item in json.load(open(drc))["unconnected_items"]:
@@ -202,7 +294,7 @@ def main(src, drc, out):
         if net in PLANE_NETS and (net, (x, y, layer), None) not in jobs:
             jobs.append((net, (x, y, layer), None))
 
-    result = {"tracks": [], "vias": [], "ripped": [], "failed": []}
+    result = {"tracks": [], "vias": [], "ripped": [], "rip_segs": [], "rip_vias": [], "failed": []}
     for net, src_pt, dst_pt in jobs:
         r = route(net, src_pt, dst_pt)
         if r:
@@ -217,49 +309,70 @@ def main(src, drc, out):
                 continue
             if min(math.hypot(ax - src_pt[0], ay - src_pt[1]), math.hypot(bx - src_pt[0], by - src_pt[1])) < 1.6:
                 near.append(snet)
+        tries = [(c, R) for R in (1.5, 3.0) for n in range(1, LIFT + 1) for c in itertools.combinations(near, n)]
+        tries += [((v,), None) for v in near]
         done = False
-        for victims in [c for n in range(1, LIFT + 1) for c in itertools.combinations(near, n)]:
-            saved = (list(d["segs"]), list(d["vias"]))
-            d["segs"] = [s for s in d["segs"] if s[5] not in victims]
-            d["vias"] = [v for v in d["vias"] if v[3] not in victims]
-            lifted = (list(d["segs"]), list(d["vias"]))
-            # a via dropped right next to the pad often sits in the lifted net's way; try further out too
-            for lead in ((0.6,) if dst_pt else (0.6, 1.5, 3.0, 5.0)):
+        for victims, R in tries:
+            saved = (d["segs"], d["vias"])
+            cuts = [lift(v, src_pt if R else None, R) for v in victims]
+            lifted = (d["segs"], d["vias"])
+            # a via dropped right next to the pad often sits in the cut net's way; try further out too
+            for lead in ((0.6,) if dst_pt else (0.6, 1.5, 3.0)):
                 d["segs"], d["vias"] = list(lifted[0]), list(lifted[1])
                 r = route(net, src_pt, dst_pt, lead)
                 rr = []
                 if not r:
                     break
                 commit(*r)
-                for v in victims:
-                    rr.append(reroute_net(v))
+                for v, (rs, rv, terms) in zip(victims, cuts):
+                    rr.append(join(v, terms))
                     if rr[-1] is None:
                         break
+                if VERBOSE:
+                    print("    %s R=%s lead=%s: pad %s, rejoin %s; ends %s" % (
+                        victims, R, lead, bool(r), [x is not None for x in rr],
+                        [[(round(t[0], 2), round(t[1], 2), t[2]) for t in c[2]] for c in cuts]))
                 if None not in rr:
                     break
-            if r and None not in rr:
-                result["ripped"] += [v for v in victims if v not in result["ripped"]]
-                result["tracks"] = [x for x in result["tracks"] if x[5] not in victims] + r[0]
-                result["vias"] = [x for x in result["vias"] if x[2] not in victims] + r[1]
-                for t, v in rr:
-                    result["tracks"] += t
-                    result["vias"] += v
-                print("  %s at (%.2f, %.2f): lifted and rerouted %s" % (net, src_pt[0], src_pt[1], list(victims)))
-                done = True
-                break
-            d["segs"], d["vias"] = saved
+            if not (r and None not in rr):
+                d["segs"], d["vias"] = saved
+                continue
+            new = [(r[0], r[1])] + rr
+            for v, (rs, rv, terms) in zip(victims, cuts):
+                if R is None and v not in result["ripped"]:
+                    result["ripped"].append(v)
+                for s in rs:                       # copper added earlier in this run is simply dropped again
+                    t = [s[0], s[1], s[2], s[3], s[6], s[5]]
+                    if t in result["tracks"]:
+                        result["tracks"].remove(t)
+                    else:
+                        result["rip_segs"].append(t)
+                for s in rv:
+                    t = [s[0], s[1], s[3]]
+                    if t in result["vias"]:
+                        result["vias"].remove(t)
+                    else:
+                        result["rip_vias"].append(t)
+            for t, v in new:
+                result["tracks"] += t
+                result["vias"] += v
+            print("  %s at (%.2f, %.2f): moved %s (%s)" % (
+                net, src_pt[0], src_pt[1], list(victims), "within %.1f mm" % R if R else "whole net"))
+            done = True
+            break
         if not done:
             result["failed"].append([net, src_pt])
-            print("  failed %s at (%.2f, %.2f); reached %s; tried lifting %s" % (net, src_pt[0], src_pt[1], boxed, near))
+            print("  failed %s at (%.2f, %.2f); reached %s; tried moving %s" % (net, src_pt[0], src_pt[1], boxed, near))
     seen, vias = set(), []
     for x, y, net in result["vias"]:                # routes of one net may share a via
-        if (round(x, 3), round(y, 3)) not in seen:
-            seen.add((round(x, 3), round(y, 3)))
+        if key(x, y) not in seen:
+            seen.add(key(x, y))
             vias.append([x, y, net])
     result["vias"] = vias
     json.dump(result, open(out, "w"))
-    print("routed %d of %d; lifted %s; failed %s" % (
-        len(jobs) - len(result["failed"]), len(jobs), result["ripped"], [f[0] for f in result["failed"]]))
+    print("routed %d of %d; lifted %s, cut %d segments; failed %s" % (
+        len(jobs) - len(result["failed"]), len(jobs), result["ripped"], len(result["rip_segs"]),
+        [f[0] for f in result["failed"]]))
 
 
 if __name__ == "__main__":

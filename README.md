@@ -13,8 +13,8 @@ this repository has run on real hardware. **Do not order this board yet.**
 
 | Part | State |
 |---|---|
-| Schematic (`hardware/s6la8.zen`) | Complete, 155 parts. Builds cleanly; not yet reviewed by a second person |
-| PCB layout (`hardware/eda/s6la8.kicad_pcb`) | Placed and autorouted. KiCad DRC: 0 errors, 340 warnings (mostly silkscreen overlaps), **14 connections still open** (the `SLOE` net, five FPGA 3.3 V and ground pads on its bottom row that are boxed in by neighbouring escape routes, and the pour islands attached to them). No signal-integrity review. See "Layout" below |
+| Schematic (`hardware/s6la8.zen`) | Complete, 155 parts. Builds cleanly; not yet reviewed by a second person. KiCad ERC: 1 error (a stray 3.3 V power symbol the generator leaves next to `R_LED_USB`; it touches nothing and the netlist is correct) and 7 "power pin not driven" findings downgraded to warnings in the project file, because the rails are fed by regulator outputs and the generated sheet has no power flags |
+| PCB layout (`hardware/eda/s6la8.kicad_pcb`) | Placed and autorouted. KiCad DRC: 0 errors, 317 warnings (315 silkscreen, 2 leftover 0.05 mm track stubs), **1 connection still open**: FPGA ground pin 54. The schematic-parity check reports only naming differences (a leading `/` and the names of no-connect nets). No signal-integrity or power-integrity review. See "Layout" below |
 | FX2 firmware (`firmware/`) | Compiles with SDCC (about 3.3 KB of code). Never run |
 | FPGA gateware (`gateware/`) | Streaming and a 32 K-sample triggered buffer pass simulation. No ISE build yet, so the pinout and timing are unverified. The SDRAM deep buffer is not implemented |
 | libsigrok driver (`host/driver/`) | Compiles against libsigrok. Never run against a device |
@@ -49,15 +49,27 @@ pcb layout hardware/s6la8.zen          # sync footprints and nets (Zener)
 python layout/place.py eda/s6la8.kicad_pcb     # seed placement
 python layout/route.py eda/s6la8.kicad_pcb     # Freerouting
 python layout/fanout.py eda/s6la8.kicad_pcb    # plane vias
-python layout/patch.py ...                     # grid router for leftovers (see file)
+python layout/patch.py dump|rip|apply ...      # leftovers, see the file header
+python layout/patch_solve.py ...               # grid router with rip-up (needs numpy)
 ```
 
-(`place.py`, `route.py` and `fanout.py` run with KiCad's bundled Python.)
+(`place.py`, `route.py`, `fanout.py` and `patch.py` run with KiCad's bundled
+Python.)
+
+The leftover pass is a plain grid router. It closed the connections
+Freerouting left open by cutting neighbouring tracks near a boxed-in pad and
+joining them again around the new copper. The tracks it lays are legal but
+not pretty (many short 0.05 mm jogs), and it moved parts of `FD1`, `FD4`,
+`FD7`, `FLAGA`, `SLOE`, `MODE`, `SD_BA0`, `SD_DQ1` and `SD_DQ12` without any
+regard for length or impedance.
 
 What still has to happen before this layout can be trusted:
 
-1. Close the remaining open connections by hand in KiCad. They need
-   neighbouring tracks moved, which none of the scripted passes can do.
+1. Connect FPGA pin 54 (GND, bottom row) by hand in KiCad. Its only way out
+   on the top layer is crossed by the 1.2 V track from pin 52 to that pin's
+   decoupling capacitor, and the bottom layer underneath is a full bus, so
+   there is no room for a via. It needs a few tracks pushed aside, or the
+   capacitors between the FPGA and the FX2 placed with more room.
 2. Build the gateware in Xilinx ISE to confirm the FPGA accepts this pinout.
 3. Review the critical routes: the USB pair, IFCLK, the SDRAM bus, the buck
    converters' switching loops, decoupling placement.
