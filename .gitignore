@@ -53,3 +53,6 @@ fp-info-cache
 /hardware/eda/default.net
 *.dsn
 *.ses
+gateware/rtl/auth_key.vh
+*.key
+case/build/

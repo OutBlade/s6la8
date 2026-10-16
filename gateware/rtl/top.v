@@ -52,6 +52,23 @@ module top #(
     wire clk, locked;
     clkgen u_clk (.clk50(CLK50), .clk(clk), .locked(locked));
 
+    // ------------------------------------------------------------ authentication
+    // Production bitstreams only capture on boards whose EEPROM holds the tag
+    // for this FPGA's Device DNA (rtl/dna_auth.v, tools/provision.py).
+`ifdef S6LA8_PRODUCTION
+    `include "auth_key.vh"
+`else
+    `include "auth_key_dev.vh"
+`endif
+    reg [63:0]  auth_tag = 0;         // 0x30..0x37, from the EEPROM via the FX2
+    reg         auth_check = 1'b0;
+    wire [56:0] dna;
+    wire        dna_valid, auth_ok, auth_busy;
+    wire [63:0] dna64 = {7'b0, dna};
+    wire        enabled = !AUTH_REQUIRED || auth_ok;
+    dna_auth #(.KEY(AUTH_KEY)) u_auth (.clk(clk), .tag(auth_tag), .check(auth_check),
+        .dna(dna), .dna_valid(dna_valid), .ok(auth_ok), .busy(auth_busy));
+
     // ------------------------------------------------------------ registers
     wire [6:0] addr;
     wire [7:0] wdata;
@@ -69,12 +86,12 @@ module top #(
     wire [3:0]  stage_off = addr[3:0] - 4'h8;        // 0x18..0x27 -> 0..15
 
     always @(posedge clk) begin
-        arm <= 1'b0; soft_rst <= 1'b0; force_trig <= 1'b0;
+        arm <= 1'b0; soft_rst <= 1'b0; force_trig <= 1'b0; auth_check <= 1'b0;
         if (wstrobe) begin
             case (addr)
                 7'h04: begin
-                    ctrl       <= wdata & 8'h05;      // run_stream, testgen
-                    arm        <= wdata[1];
+                    ctrl       <= wdata & {7'h02, enabled};   // run_stream, testgen
+                    arm        <= wdata[1] & enabled;
                     soft_rst   <= wdata[3];
                     force_trig <= wdata[4];
                 end
@@ -92,10 +109,13 @@ module top #(
                 7'h13: pre[31:24]     <= wdata;
                 7'h28: nstages        <= wdata;
                 7'h2c: leds           <= wdata;
+                7'h06: auth_check     <= wdata[0];
                 default: ;
             endcase
             if (addr >= 7'h18 && addr < 7'h28)
                 stages[8*stage_off +: 8] <= wdata;
+            if (addr >= 7'h30 && addr < 7'h38)
+                auth_tag[8*addr[2:0] +: 8] <= wdata;
         end
     end
 
@@ -111,7 +131,10 @@ module top #(
             7'h15: rdata = trigpos[15:8];
             7'h16: rdata = trigpos[23:16];
             7'h17: rdata = trigpos[31:24];
+            7'h06: rdata = {4'b0, AUTH_REQUIRED[0], auth_busy, auth_ok, dna_valid};
             7'h2c: rdata = leds;
+            7'h38, 7'h39, 7'h3a, 7'h3b, 7'h3c, 7'h3d, 7'h3e, 7'h3f:
+                   rdata = dna64[8*addr[2:0] +: 8];
             default: rdata = 8'h00;
         endcase
     end

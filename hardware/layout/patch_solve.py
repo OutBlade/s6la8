@@ -28,6 +28,7 @@ PLANE_NETS = ("GND", "VCC_3V3")
 LAYERS = ("F.Cu", "B.Cu")
 LIFT = int(os.environ.get("LIFT", "2"))      # how many nets may be cut at once for a boxed-in pad
 VERBOSE = bool(os.environ.get("VERBOSE"))
+MUST = os.environ.get("MUST")                # only try cuts that include this net
 MARGIN = 7.0                                 # a search may stray this far (mm) from its end points
 
 
@@ -309,7 +310,8 @@ def main(src, drc, out):
                 continue
             if min(math.hypot(ax - src_pt[0], ay - src_pt[1]), math.hypot(bx - src_pt[0], by - src_pt[1])) < 1.6:
                 near.append(snet)
-        tries = [(c, R) for R in (1.5, 3.0) for n in range(1, LIFT + 1) for c in itertools.combinations(near, n)]
+        tries = [(c, R) for R in (1.5, 3.0) for n in range(1, LIFT + 1) for c in itertools.combinations(near, n)
+                 if not MUST or MUST in c]
         tries += [((v,), None) for v in near]
         done = False
         for victims, R in tries:
