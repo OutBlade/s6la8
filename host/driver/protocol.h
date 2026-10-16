@@ -54,12 +54,16 @@
 #define STATUS_DONE		(1 << 0)
 
 /* FPGA registers (gateware/rtl/top.v). */
+#define AUTH_OK			(1 << 1)
+#define AUTH_REQUIRED		(1 << 3)
+
 #define REG_ID0			0x00
 #define REG_ID1			0x01
 #define REG_VERSION		0x02
 #define REG_DEPTH_LOG2		0x03
 #define REG_CTRL		0x04
 #define REG_STATUS		0x05
+#define REG_AUTH		0x06	/* bit0 DNA read, bit1 ok, bit2 busy, bit3 required */
 #define REG_DIVIDER		0x08
 #define REG_POST		0x0c
 #define REG_PRE			0x10

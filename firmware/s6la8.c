@@ -31,6 +31,7 @@
 #include <setupdat.h>
 #include <eputils.h>
 #include <command.h>
+#include <i2c.h>
 #include <s6la8.h>
 
 #define SYNCDELAY() SYNCDELAY4
@@ -125,6 +126,33 @@ static void fpga_shift_packet(void)
 	SYNCDELAY();
 }
 
+static void reg_write(BYTE addr, BYTE len, BYTE *buf)
+{
+	BYTE i;
+
+	REG_CS_N = 0;
+	spi_xfer(addr & 0x7f);
+	for (i = 0; i < len; i++)
+		spi_xfer(buf[i]);
+	REG_CS_N = 1;
+}
+
+/*
+ * Hand the FPGA this board's authentication tag (written into the EEPROM at
+ * production, see tools/provision.py) and start the check.  Production
+ * bitstreams only capture once the tag matches the FPGA's Device DNA.
+ */
+static void fpga_authenticate(void)
+{
+	BYTE tag[8];
+	BYTE go = 1;
+
+	if (!eeprom_read(EEPROM_ADDR, EEPROM_TAG_OFFSET, sizeof(tag), tag))
+		return;
+	reg_write(REG_AUTH_TAG, sizeof(tag), tag);
+	reg_write(REG_AUTH, 1, &go);
+}
+
 static void fpga_config_end(void)
 {
 	BYTE i;
@@ -145,6 +173,8 @@ static void fpga_config_end(void)
 
 	if (!DONE)
 		FB_OE_N = 0;		/* configuration failed: fallback back on */
+	else
+		fpga_authenticate();
 }
 
 static BYTE status_byte(void)
@@ -277,11 +307,23 @@ BOOL handle_vendorcommand(BYTE cmd)
 		if (len > 64)
 			return FALSE;
 		ep0_wait_data();
-		REG_CS_N = 0;
-		spi_xfer(addr & 0x7f);
-		for (i = 0; i < len; i++)
-			spi_xfer(EP0BUF[i]);
-		REG_CS_N = 1;
+		reg_write(addr, len, EP0BUF);
+		return TRUE;
+	case CMD_EEPROM_WRITE:
+		/* Production only: the MODE jumper must be fitted. */
+		if (len > 64 || MODE)
+			return FALSE;
+		ep0_wait_data();
+		return eeprom_write(EEPROM_ADDR, SETUPDAT[2] | (SETUPDAT[3] << 8), len, EP0BUF);
+	case CMD_EEPROM_READ:
+		if (len > 64)
+			return FALSE;
+		if (!eeprom_read(EEPROM_ADDR, SETUPDAT[2] | (SETUPDAT[3] << 8), len, EP0BUF))
+			return FALSE;
+		EP0BCH = 0;
+		SYNCDELAY();
+		EP0BCL = len;
+		SYNCDELAY();
 		return TRUE;
 	case CMD_REG_READ:
 		if (len > 64)

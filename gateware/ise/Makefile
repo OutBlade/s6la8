@@ -6,7 +6,11 @@
 # Result: s6la8-fpga.bin (raw bitstream for upload) and a timing summary.
 PART := xc6slx9-2-tqg144
 TOP  := top
-RTL  := $(addprefix ../rtl/,top.v clkgen.v capture.v afifo.v fx2_sfifo.v spi_regs.v)
+RTL  := $(addprefix ../rtl/,top.v clkgen.v capture.v afifo.v fx2_sfifo.v spi_regs.v dna_auth.v)
+# PRODUCTION=1 builds with the secret key in ../rtl/auth_key.vh (tools/provision.py
+# keyfile); such a bitstream only captures on provisioned boards.
+PRODUCTION ?= 0
+DEFINE := $(if $(filter 1,$(PRODUCTION)),-define {S6LA8_PRODUCTION},)
 B    := work
 
 bitstream: $(B)/$(TOP).bin
@@ -19,7 +23,7 @@ $(B)/$(TOP).prj: $(RTL)
 	@for f in $(RTL); do echo "verilog work \"../$$f\""; done > $@
 
 $(B)/$(TOP).ngc: $(B)/$(TOP).prj
-	cd $(B) && printf 'run\n-ifn $(TOP).prj\n-ofn $(TOP)\n-ofmt NGC\n-p $(PART)\n-top $(TOP)\n-opt_mode Speed\n-opt_level 1\n-iob auto\n' > $(TOP).xst && xst -ifn $(TOP).xst -ofn $(TOP).syr
+	cd $(B) && printf 'run\n-ifn $(TOP).prj\n-ofn $(TOP)\n-ofmt NGC\n-p $(PART)\n-top $(TOP)\n-vlgincdir {../../rtl}\n$(DEFINE)\n-opt_mode Speed\n-opt_level 1\n-iob auto\n' > $(TOP).xst && xst -ifn $(TOP).xst -ofn $(TOP).syr
 
 $(B)/$(TOP).ucf: pins.ucf timing.ucf
 	@mkdir -p $(B)

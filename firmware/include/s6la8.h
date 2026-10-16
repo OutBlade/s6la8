@@ -24,6 +24,17 @@
 #define CMD_REG_READ		0xc3	/* IN, wValue = address, wLength = bytes */
 #define CMD_ACQUISITION		0xc4	/* OUT, wValue = 1 start / 0 stop */
 #define CMD_GET_STATUS		0xc5	/* IN, 1 byte */
+#define CMD_EEPROM_WRITE	0xc6	/* OUT, wValue = EEPROM address, MODE jumper fitted */
+#define CMD_EEPROM_READ		0xc7	/* IN, wValue = EEPROM address */
+
+/* 24LC128 with A0 tied high; the authentication tag lives in its last page. */
+#define EEPROM_ADDR		0x51
+#define EEPROM_TAG_OFFSET	0x3f00
+
+/* FPGA registers (gateware/rtl/top.v). */
+#define REG_AUTH		0x06	/* write 1: check tag; read: bit1 ok, bit0 DNA read */
+#define REG_AUTH_TAG		0x30	/* 8 bytes, little endian */
+#define REG_DNA			0x38	/* 8 bytes, little endian, read only */
 
 #define STATUS_DONE		(1 << 0)
 #define STATUS_INIT_B		(1 << 1)

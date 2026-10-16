@@ -82,6 +82,7 @@ static int reg_write32(const struct sr_dev_inst *sdi, uint8_t addr, uint32_t v)
 
 SR_PRIV int s6la8_fpga_upload(const struct sr_dev_inst *sdi)
 {
+	uint8_t auth;
 	struct drv_context *drvc = sdi->driver->context;
 	struct sr_usb_dev_inst *usb = sdi->conn;
 	struct dev_context *devc = sdi->priv;
@@ -133,6 +134,19 @@ SR_PRIV int s6la8_fpga_upload(const struct sr_dev_inst *sdi)
 		return SR_ERR;
 	}
 	devc->depth = 1ULL << id[3];
+	/*
+	 * The firmware has handed the FPGA this board's tag from the EEPROM.
+	 * Production gateware refuses to capture unless it matches the FPGA's
+	 * Device DNA; give the user a clear message instead of a silent device.
+	 */
+	g_usleep(100 * 1000);
+	if (s6la8_reg_read(sdi, REG_AUTH, &auth, 1) == SR_OK &&
+	    (auth & AUTH_REQUIRED) && !(auth & AUTH_OK)) {
+		sr_err("This board failed authentication: it is not a genuine "
+		       "s6la8, or it was never provisioned. Capture is disabled.");
+		return SR_ERR;
+	}
+
 	sr_info("FPGA gateware version %d, buffer %" PRIu64 " samples.",
 		id[2], devc->depth);
 	return SR_OK;
