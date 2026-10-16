@@ -15,7 +15,7 @@ so **build and test prototypes before ordering a batch** (see
 
 | Part | State |
 |---|---|
-| Schematic (`hardware/s6la8.zen`) | Complete, 155 parts. KiCad ERC: 1 error (a stray 3.3 V power symbol the generator leaves next to `R_LED_USB`; it touches nothing and the netlist is correct) and 7 "power pin not driven" findings downgraded to warnings in the project file, because the rails are fed by regulator outputs and the generated sheet has no power flags. Not yet reviewed by a second person |
+| Schematic (`hardware/s6la8.zen`) | Complete, 155 parts. KiCad ERC: 0 errors; 7 "power pin not driven" findings are downgraded to warnings in the project file because the rails are fed by regulator outputs and the generated sheet has no power flags. Not yet reviewed by a second person |
 | PCB layout (`hardware/eda/s6la8.kicad_pcb`) | **Fully routed. KiCad DRC: 0 errors, 0 unconnected, 1 warning** (the probe header's silkscreen was trimmed at the board edge on purpose). Schematic parity: only naming differences. USB pair routed as a coupled 90 ohm pair. No signal- or power-integrity simulation |
 | Manufacturing package (`hardware/release.py`) | Gerbers, drill, JLCPCB BOM and pick-and-place, STEP, schematic and assembly PDFs, fab notes. Refuses to build unless DRC is clean |
 | Enclosure (`case/`) | Printable tray and lid (OpenSCAD), checked against KiCad's 3D model of the populated board: no collisions. Not yet printed |
@@ -28,8 +28,8 @@ so **build and test prototypes before ordering a batch** (see
 
 ![Enclosure](docs/case.png)
 
-The schematic is in [docs/schematic.pdf](docs/schematic.pdf). It is one very
-large generated sheet and still needs to be split into readable pages.
+The schematic is in [docs/schematic.pdf](docs/schematic.pdf): one large
+generated sheet (2.7 x 1 m), best read zoomed in on screen.
 
 ## Design
 

@@ -3,7 +3,7 @@
 	(generator "diode")
 	(generator_version "0.4.77")
 	(uuid "513d9cc1-d27a-514d-a37c-2f1ca04dddfa")
-	(paper "A0")
+	(paper "User" 2720 1030)
 	(lib_symbols
 		(symbol "24LC128"
 			(exclude_from_sim no)
@@ -32307,95 +32307,6 @@
 			(project "s6la8"
 				(path "/513d9cc1-d27a-514d-a37c-2f1ca04dddfa"
 					(reference "#PWR6529b597e75056d2952baee1ce56a6bc")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "VCC")
-		(at 1261.11 566.42 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "6536ef85-5c4e-5286-aefb-8845e647a58c")
-		(property "Reference" "#PWR6536ef855c4e5286aefb8845e647a58c"
-			(at 1261.11 566.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "VCC_3V3"
-			(at 1261.11 562.61 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 1261.11 566.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 1261.11 566.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 1261.11 566.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "global power"
-			(at 1261.11 566.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "8ac27300-e4d6-5f96-8b68-97f896238e8f")
-		)
-		(instances
-			(project "s6la8"
-				(path "/513d9cc1-d27a-514d-a37c-2f1ca04dddfa"
-					(reference "#PWR6536ef855c4e5286aefb8845e647a58c")
 					(unit 1)
 				)
 			)
