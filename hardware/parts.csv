@@ -1,0 +1,30 @@
+value,footprint,mpn,manufacturer,lcsc,note
+100nF 6.3V,C_0402_1005Metric,CL05B104KO5NNNC,Samsung Electro-Mechanics,C1525,JLC basic
+100nF 10V,C_0402_1005Metric,CL05B104KO5NNNC,Samsung Electro-Mechanics,C1525,JLC basic; 16 V part
+1uF,C_0402_1005Metric,CL05A105KA5NQNC,Samsung Electro-Mechanics,C52923,JLC basic; 25 V
+1uF 10V,C_0402_1005Metric,CL05A105KA5NQNC,Samsung Electro-Mechanics,C52923,JLC basic; 25 V
+18pF,C_0402_1005Metric,CL05C180JB5NNNC,Samsung Electro-Mechanics,C1549,JLC basic; C0G
+2.2uF 6.3V,C_0603_1608Metric,CL10A225KO8NNNC,Samsung Electro-Mechanics,C23630,JLC basic; 16 V
+4.7uF 6.3V,C_0805_2012Metric,CL21A475KAQNNNE,Samsung Electro-Mechanics,C1779,JLC basic; 25 V
+10uF 10V,C_0805_2012Metric,CL21A106KAYNNNE,Samsung Electro-Mechanics,C15850,JLC basic; 25 V
+10uF 6.3V,C_0805_2012Metric,CL21A106KAYNNNE,Samsung Electro-Mechanics,C15850,JLC basic; 25 V
+22uF 6.3V,C_0805_2012Metric,CL21A226MAQNNNE,Samsung Electro-Mechanics,C45783,JLC basic; 25 V
+100k,R_0402_1005Metric,0402WGF1003TCE,UNI-ROYAL,C25741,JLC basic
+10k,R_0402_1005Metric,0402WGF1002TCE,UNI-ROYAL,C25744,JLC basic
+4.7k,R_0402_1005Metric,0402WGF4701TCE,UNI-ROYAL,C25900,JLC basic
+5.1k,R_0402_1005Metric,0402WGF5101TCE,UNI-ROYAL,C25905,JLC basic
+2.2k,R_0402_1005Metric,0402WGF2201TCE,UNI-ROYAL,C25879,JLC basic
+1k,R_0402_1005Metric,0402WGF1001TCE,UNI-ROYAL,C11702,JLC basic
+330,R_0402_1005Metric,0402WGF3300TCE,UNI-ROYAL,C25104,JLC basic
+100,R_0402_1005Metric,0402WGF1000TCE,UNI-ROYAL,C25076,JLC basic
+33,R_0402_1005Metric,0402WGF330JTCE,UNI-ROYAL,C25105,JLC basic
+453k,R_0402_1005Metric,0402WGF4533TCE,UNI-ROYAL,,match at order; sets the 3.3 V buck output with 100k
+220 100MHz,R_0603_1608Metric,,,,ferrite bead 220 ohm at 100 MHz in 0603; pick at order
+220 100MHz,R_0805_2012Metric,,,,ferrite bead 220 ohm at 100 MHz in 0805; pick at order
+2.2uH,L_1210_3225Metric,,,,"power inductor 2.2 uH, >=1.5 A saturation, 1210; check against TLV62569 datasheet"
+LED GREEN,LED_0603_1608Metric,,,,0603 green; pick at order
+LED RED,LED_0603_1608Metric,,,,0603 red; pick at order
+LED YELLOW,LED_0603_1608Metric,,,,0603 yellow; pick at order
+24MHz 12pF,Crystal_SMD_3225-4Pin_3.2x2.5mm,,,,"24 MHz, 12 pF load, 3225; FX2 needs +-100 ppm or better"
+XC6SLX9-2TQG144C,TQFP-144_20x20mm_P0.5mm,XC6SLX9-2TQG144C,AMD Xilinx,C27408,buy from an authorised channel if LCSC stock looks grey-market
+CY7C68013A-56PVXC,SSOP-56_7.5x18.5mm_P0.635mm,CY7C68013A-56PVXC,Infineon,C26717,

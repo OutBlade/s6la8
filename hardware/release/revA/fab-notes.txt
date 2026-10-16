@@ -1,0 +1,30 @@
+s6la8 - order settings
+=====================
+
+PCB
+  Layers                4, stackup JLC04161H-7628 (or the fab's equivalent with
+                        about 0.21 mm prepreg between the outer and inner layers)
+  Thickness             1.6 mm
+  Material              FR-4, TG155 or better
+  Copper                1 oz outer, 0.5 oz inner
+  Surface finish        ENIG (fine-pitch TQFP and SSOP; HASL is not flat enough)
+  Solder mask           black, matte if offered
+  Silkscreen            white
+  Min track / space     0.12 / 0.15 mm;  min via 0.45 mm pad, 0.2 mm drill
+  Via covering          tented (or "epoxy filled and capped" if vias in pads are added later)
+  Impedance control     yes: USB_D_P / USB_D_N, 90 ohm differential, outer layers,
+                        0.26 mm width, 0.15 mm gap (fab may trim the width)
+  Board outline         100 x 64 mm, 4x M3 mounting holes
+  Panel                 let the fab panelise with rails and fiducials (e.g. 2x2),
+                        V-cut or tab routing; keep 0.5 mm from copper to the board edge
+
+Assembly (top side only, plus 5 through-hole headers)
+  SMT                   all parts on top
+  Through-hole          J1, J2, J3, J5 (pin headers), J4 shell tabs are SMT-legs + THT pegs
+  Parts                 see the BOM; parts without an LCSC number are matched by MPN or
+                        chosen in the order form. Check every rotation in the fab's
+                        placement preview (TQFP-144, SSOP-56, TSOP-II-54, SOT-23 parts).
+  Inspection            ask for AOI and X-ray of the TQFP-144 and SSOP-56 on the first batch
+  Programming           none: firmware and bitstream are loaded over USB by the driver.
+                        The board-authentication tag is written to the EEPROM at your
+                        end-of-line test (tools/provision.py).

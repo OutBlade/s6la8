@@ -1,0 +1,4388 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-15T21:27:44",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/513d9cc1-d27a-514d-a37c-2f1ca04dddfa",
+            "violations": [
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6536ef855c4e5286aefb8845e647a58c Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.6642
+                            },
+                            "uuid": "8ac27300-e4d6-5f96-8b68-97f896238e8f"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR8f030cb98ef659eda6978dd4a3f1d2e4 [GND]",
+                            "pos": {
+                                "x": 12.4587,
+                                "y": 3.3401
+                            },
+                            "uuid": "8f030cb9-8ef6-59ed-a697-8dd4a3f1d2e4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6668f06504b05e1baf6f2579452441e9 [VCC]",
+                            "pos": {
+                                "x": 12.4841,
+                                "y": 3.5941
+                            },
+                            "uuid": "6668f065-04b0-5e1b-af6f-2579452441e9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR43097c3b1e8652e09632c549612b9c2b [VCC]",
+                            "pos": {
+                                "x": 12.5095,
+                                "y": 3.0353
+                            },
+                            "uuid": "43097c3b-1e86-52e0-9632-c549612b9c2b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR02da6c83829c5552aa4d750962c63c8d [VCC]",
+                            "pos": {
+                                "x": 12.5984,
+                                "y": 1.9558
+                            },
+                            "uuid": "02da6c83-829c-5552-aa4d-750962c63c8d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR02da6c83829c5552aa4d750962c63c8d Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 12.5984,
+                                "y": 1.9558
+                            },
+                            "uuid": "3fa3ead2-e6f4-59a1-8a1f-0d2b56464525"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR32d645f768a75d3da4b23c1c6df418ae [GND]",
+                            "pos": {
+                                "x": 12.5984,
+                                "y": 2.7686
+                            },
+                            "uuid": "32d645f7-68a7-5d3d-a4b2-3c1c6df418ae"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRd47e9a007f425c69a0221d0fa0f229fb [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 0.2413
+                            },
+                            "uuid": "d47e9a00-7f42-5c69-a022-1d0fa0f229fb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U10 [XC6SLX9-TQG144]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 0.7239
+                            },
+                            "uuid": "a57bf756-f3f9-5510-a348-f24c7b759f38"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U10 [XC6SLX9-TQG144]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 1.524
+                            },
+                            "uuid": "55f8da8e-fd07-59e7-8d81-82bdf846a608"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U14 [MT48LC16M16A2P]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 2.3622
+                            },
+                            "uuid": "5c69599e-8dc6-5414-8f99-cb1201fc6ea6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol J1 [Conn_01x06]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 3.1496
+                            },
+                            "uuid": "ff55701d-5f94-537d-83bf-cebe460947de"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR67f08f7b5ec95a40bf80057f2686abe1 [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 3.5941
+                            },
+                            "uuid": "67f08f7b-5ec9-5a40-bf80-057f2686abe1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol Y1 [ASE-xxxMHz]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 3.7211
+                            },
+                            "uuid": "455d52a7-b41c-5199-9c9d-815a1dfbe630"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR00404360bd445ece97aecf43f79771a6 [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 3.8481
+                            },
+                            "uuid": "00404360-bd44-5ece-97ae-cf43f79771a6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR881fd1a616025bd5874f4c347b43da91 [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 4.0767
+                            },
+                            "uuid": "881fd1a6-1602-5bd5-874f-4c347b43da91"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C37 [C_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 4.1529
+                            },
+                            "uuid": "c0a95fe9-17f2-568d-826f-04607cdc4384"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR347dba2a0a5854eca4243999334e5c34 [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 4.2291
+                            },
+                            "uuid": "347dba2a-0a58-54ec-a424-3999334e5c34"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRd502ae4ba4e35749af8d3bd7d508239f [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 4.4323
+                            },
+                            "uuid": "d502ae4b-a4e3-5749-af8d-3bd7d508239f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U2 [USBLC6-2SC6]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 4.5339
+                            },
+                            "uuid": "78ab4443-437b-5159-a13a-ef0f47b51b82"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR592dfb251e6f5329828d6303c8e59b30 [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 4.6609
+                            },
+                            "uuid": "592dfb25-1e6f-5329-828d-6303c8e59b30"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol J2 [Conn_01x02]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 4.7879
+                            },
+                            "uuid": "f05e4a46-3b32-5b79-a546-f1208a91595e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol H4 [MountingHole_Pad]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.1181
+                            },
+                            "uuid": "2f326288-1754-5d21-977f-834f10f62f25"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR1d18bc05d11959f3ae4bb993bb16db20 [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.1943
+                            },
+                            "uuid": "1d18bc05-d119-59f3-ae4b-b993bb16db20"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR73c38cb44dd453c29a7d28cec4cd3031 [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.3594
+                            },
+                            "uuid": "73c38cb4-4dd4-53c2-9a7d-28cec4cd3031"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R53 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.4356
+                            },
+                            "uuid": "e7f6fc24-1232-5d17-abf6-00989d1dc87c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6536ef855c4e5286aefb8845e647a58c [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.6642
+                            },
+                            "uuid": "6536ef85-5c4e-5286-aefb-8845e647a58c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R48 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.7404
+                            },
+                            "uuid": "9258a851-8ad7-5359-b947-fffcadc4507d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRc89f48993fe75d8fbf836e27ca1789ff [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 5.969
+                            },
+                            "uuid": "c89f4899-3fe7-5d8f-bf83-6e27ca1789ff"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R4 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 6.0452
+                            },
+                            "uuid": "a0a5687f-b075-551a-8965-9a21c03304da"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRac6a8325372657568420a5f3441e39d9 [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 6.2738
+                            },
+                            "uuid": "ac6a8325-3726-5756-8420-a5f3441e39d9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R45 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 6.35
+                            },
+                            "uuid": "e046779d-1faf-5b3d-9bdd-458fb1e703d6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRa0137dfc0ebd51ffb7d9cef4681c875a [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 6.5532
+                            },
+                            "uuid": "a0137dfc-0ebd-51ff-b7d9-cef4681c875a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R56 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 6.6294
+                            },
+                            "uuid": "14de6aaf-7ab1-5ee4-adde-71e2f322092f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR8aaa2ab571be58c4a9d0bcc1f7d981ce [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 6.858
+                            },
+                            "uuid": "8aaa2ab5-71be-58c4-a9d0-bcc1f7d981ce"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R51 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 6.9342
+                            },
+                            "uuid": "8cf9c254-af1a-5adf-8c09-40eb2c1348e3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRfac646168f485686a77138a826eb4633 [VCC]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 7.112
+                            },
+                            "uuid": "fac64616-8f48-5686-a771-38a826eb4633"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R49 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 7.1882
+                            },
+                            "uuid": "c1f944a4-df2c-5adb-8fc4-bcc143069cf8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R3 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 7.4803
+                            },
+                            "uuid": "ab84db7f-9c98-55cb-b31d-2bb9b8d1d14f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRf1b8d1c1225e5699a06c9d5384a40b6f [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 7.5565
+                            },
+                            "uuid": "f1b8d1c1-225e-5699-a06c-9d5384a40b6f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R9 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 7.7343
+                            },
+                            "uuid": "121abff1-4f82-5fa8-9d18-ae01de5affca"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR1448ea5cd55a53bdafc6b83fe7cb989f [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 7.8105
+                            },
+                            "uuid": "1448ea5c-d55a-53bd-afc6-b83fe7cb989f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R17 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 7.9883
+                            },
+                            "uuid": "fe0ab767-ac17-5337-90d1-bb529ccb7d92"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR092e50cbb6495f31860485a9a5bf2aa1 [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 8.0645
+                            },
+                            "uuid": "092e50cb-b649-5f31-8604-85a9a5bf2aa1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R37 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 8.2677
+                            },
+                            "uuid": "47824451-7ec2-52e9-b5ae-d95d882647c2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRa17c3aea8f3c5f7f84f16c3b24bee981 [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 8.3439
+                            },
+                            "uuid": "a17c3aea-8f3c-5f7f-84f1-6c3b24bee981"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R6 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 8.5725
+                            },
+                            "uuid": "35803eef-61a0-5397-bb72-e5fcb06de3a8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRfc04e4933a09511990f4c5dd1b2e2940 [GND]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 8.6487
+                            },
+                            "uuid": "fc04e493-3a09-5119-90f4-c5dd1b2e2940"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R24 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 8.8773
+                            },
+                            "uuid": "5c4a7124-3638-58de-a1cd-49afc19d09df"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol D2 [LED_Small_Filled_Red]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 9.1059
+                            },
+                            "uuid": "74a252ce-54a8-594a-8a86-c9daa8960237"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R14 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 9.3218
+                            },
+                            "uuid": "cd3dadc6-b6d9-54af-9136-fa29914b659d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R22 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 9.5631
+                            },
+                            "uuid": "b43d8bb2-0b2e-57ec-a30e-42915384a9c7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R31 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 9.7536
+                            },
+                            "uuid": "f23453da-9ddf-5cf6-b4bb-040c79c8e226"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R35 [R_Small]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 9.9314
+                            },
+                            "uuid": "e17c22ca-706f-54e1-9f49-fca109d84ef6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol FID3 [Fiducial]",
+                            "pos": {
+                                "x": 12.6111,
+                                "y": 10.0584
+                            },
+                            "uuid": "b0ceddbd-7c4f-5ee1-9c20-c3dc698d1816"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR7791de9d87ff5a2f861d92d909b5bcfa [GND]",
+                            "pos": {
+                                "x": 12.6365,
+                                "y": 4.8895
+                            },
+                            "uuid": "7791de9d-87ff-5a2f-861d-92d909b5bcfa"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R43 [R_Small]",
+                            "pos": {
+                                "x": 12.7381,
+                                "y": 8.8773
+                            },
+                            "uuid": "7ef2ebe5-414c-5f42-92cb-742b0d5fb3db"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R16 [R_Small]",
+                            "pos": {
+                                "x": 12.7381,
+                                "y": 9.3218
+                            },
+                            "uuid": "69cabd7e-ee01-526f-bd7d-dfd1e160e5c2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R7 [R_Small]",
+                            "pos": {
+                                "x": 12.7381,
+                                "y": 9.5631
+                            },
+                            "uuid": "25129ec3-a6c4-5d28-b056-a1d704e41bba"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R32 [R_Small]",
+                            "pos": {
+                                "x": 12.7381,
+                                "y": 9.7536
+                            },
+                            "uuid": "0bfe4651-70ac-5eec-aa8a-d8e9904b5502"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R36 [R_Small]",
+                            "pos": {
+                                "x": 12.7381,
+                                "y": 9.9314
+                            },
+                            "uuid": "219ceb81-4455-5259-8486-1915b1333bda"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R42 [R_Small]",
+                            "pos": {
+                                "x": 12.7508,
+                                "y": 8.2677
+                            },
+                            "uuid": "2f2a45b1-4b41-5697-966a-fcdeffe48d5b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR083bf3cac6db524c9c72339e23ab09dd [GND]",
+                            "pos": {
+                                "x": 12.7508,
+                                "y": 8.3439
+                            },
+                            "uuid": "083bf3ca-c6db-524c-9c72-339e23ab09dd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R27 [R_Small]",
+                            "pos": {
+                                "x": 12.7508,
+                                "y": 8.5725
+                            },
+                            "uuid": "54264f4e-ff60-5c04-92ca-1cf55f1667f3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRbd54448b52915a3da059a662052194fc [VCC]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 5.6896
+                            },
+                            "uuid": "bd54448b-5291-5a3d-a059-a662052194fc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C19 [C_Small]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 6.6294
+                            },
+                            "uuid": "6a7e0304-0b96-5e39-968e-64b53fce451d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR02b73c92bfb0507da832cdedf89f2377 [GND]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 6.7056
+                            },
+                            "uuid": "02b73c92-bfb0-507d-a832-cdedf89f2377"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R61 [R_Small]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 7.4803
+                            },
+                            "uuid": "3c8e968a-beb8-56de-9958-d2224e86dbd8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR60c08a2f6b3159d9a5bff6fce51c2f4a [GND]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 7.5565
+                            },
+                            "uuid": "60c08a2f-6b31-59d9-a5bf-f6fce51c2f4a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R11 [R_Small]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 7.7343
+                            },
+                            "uuid": "99d6e25f-7f20-58c8-9ef7-b038a435e77c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR433d5f0123de5ee398c730f8fe710d7a [GND]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 7.8105
+                            },
+                            "uuid": "433d5f01-23de-5ee3-98c7-30f8fe710d7a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R19 [R_Small]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 7.9883
+                            },
+                            "uuid": "860c5907-5ee1-543c-b4d5-be9ee324e7ee"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR66f404632e695ac782d63f925bc7c581 [GND]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 8.0645
+                            },
+                            "uuid": "66f40463-2e69-5ac7-82d6-3f925bc7c581"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R8 [R_Small]",
+                            "pos": {
+                                "x": 12.7635,
+                                "y": 9.1059
+                            },
+                            "uuid": "2dbe18b3-2242-5769-bdf9-adecef886cb7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR88dfdacf548f5d7d9427d407f9a870d5 [VCC]",
+                            "pos": {
+                                "x": 12.7762,
+                                "y": 6.2738
+                            },
+                            "uuid": "88dfdacf-548f-5d7d-9427-d407f9a870d5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R46 [R_Small]",
+                            "pos": {
+                                "x": 12.7762,
+                                "y": 6.35
+                            },
+                            "uuid": "76c68707-df64-5f84-bdc8-5a6fad0c39c7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR74ca5639408a506b958d794a95459e7d [VCC]",
+                            "pos": {
+                                "x": 12.7762,
+                                "y": 6.858
+                            },
+                            "uuid": "74ca5639-408a-506b-958d-794a95459e7d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R57 [R_Small]",
+                            "pos": {
+                                "x": 12.7762,
+                                "y": 6.9342
+                            },
+                            "uuid": "38383a3f-5b8c-5f8d-96df-0dd555e27b8e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR784de7cd1ff75363b997777df58c38a1 [VCC]",
+                            "pos": {
+                                "x": 12.7889,
+                                "y": 5.3721
+                            },
+                            "uuid": "784de7cd-1ff7-5363-b997-777df58c38a1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR5ac812eabcd65dcead0d7f5e3be6b96b [VCC]",
+                            "pos": {
+                                "x": 12.7889,
+                                "y": 5.969
+                            },
+                            "uuid": "5ac812ea-bcd6-5dce-ad0d-7f5e3be6b96b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R44 [R_Small]",
+                            "pos": {
+                                "x": 12.7889,
+                                "y": 6.0452
+                            },
+                            "uuid": "ad3a7646-25de-55e6-bfb9-f3584c6e386a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR4e191f93bb5850118643aa80894c053e [VCC]",
+                            "pos": {
+                                "x": 12.7889,
+                                "y": 7.112
+                            },
+                            "uuid": "4e191f93-bb58-5011-8643-aa80894c053e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R50 [R_Small]",
+                            "pos": {
+                                "x": 12.7889,
+                                "y": 7.1882
+                            },
+                            "uuid": "a20b2cb1-ef2b-5519-b4d9-8f781ccb8466"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C38 [C_Small]",
+                            "pos": {
+                                "x": 12.827,
+                                "y": 4.1529
+                            },
+                            "uuid": "b67fba45-7125-5c6a-bb4f-89249b1316c9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol L1 [L_Small]",
+                            "pos": {
+                                "x": 12.8397,
+                                "y": 5.7404
+                            },
+                            "uuid": "e0f7f69f-ea37-5dad-9a40-12840c5a13df"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R29 [R_Small]",
+                            "pos": {
+                                "x": 12.8524,
+                                "y": 9.5631
+                            },
+                            "uuid": "91dd8699-80c0-5918-a96d-7a640b038e2a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol FB1 [FerriteBead_Small]",
+                            "pos": {
+                                "x": 12.8651,
+                                "y": 5.4356
+                            },
+                            "uuid": "0a9cb29c-f870-5d3a-b50d-69619e1e1e40"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R60 [R_Small]",
+                            "pos": {
+                                "x": 12.8651,
+                                "y": 8.8773
+                            },
+                            "uuid": "700933f1-bbec-5db7-9014-515b8417dbb2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R18 [R_Small]",
+                            "pos": {
+                                "x": 12.8651,
+                                "y": 9.3218
+                            },
+                            "uuid": "83e11f10-8171-55f2-ad47-7f20e7cfb64e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R33 [R_Small]",
+                            "pos": {
+                                "x": 12.8651,
+                                "y": 9.7536
+                            },
+                            "uuid": "8bb10136-f8bc-5e08-a1be-0030ad0f08e1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol FID1 [Fiducial]",
+                            "pos": {
+                                "x": 12.8651,
+                                "y": 9.9314
+                            },
+                            "uuid": "3c322594-1b6f-58bb-a45d-854eceb18e7a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R54 [R_Small]",
+                            "pos": {
+                                "x": 12.8905,
+                                "y": 8.5725
+                            },
+                            "uuid": "5df0a6ae-018b-5909-8ffe-374633a4571c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR73d2d29691e25b7ea7ac7328acf3335d [GND]",
+                            "pos": {
+                                "x": 12.8905,
+                                "y": 8.6487
+                            },
+                            "uuid": "73d2d296-91e2-5b7e-a7ac-7328acf3335d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R10 [R_Small]",
+                            "pos": {
+                                "x": 12.8905,
+                                "y": 9.1059
+                            },
+                            "uuid": "03723713-7d54-544a-8e1a-3daae990f879"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C58 [C_Small]",
+                            "pos": {
+                                "x": 12.9032,
+                                "y": 6.6294
+                            },
+                            "uuid": "2bd0ef71-49fa-5e93-9fc3-eae568c017a0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2975aeb8860d5971809a67a3bd0868d9 [GND]",
+                            "pos": {
+                                "x": 12.9032,
+                                "y": 6.7056
+                            },
+                            "uuid": "2975aeb8-860d-5971-809a-67a3bd0868d9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR9c21810e7b96571b94de5e096c8b9c6c [VCC]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 1.9812
+                            },
+                            "uuid": "9c21810e-7b96-571b-94de-5e096c8b9c6c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRb1878aee6e85584eae6224b76854cce4 [VCC]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 4.4323
+                            },
+                            "uuid": "b1878aee-6e85-584e-ae62-24b76854cce4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U3 [USBLC6-2SC6]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 4.5339
+                            },
+                            "uuid": "2d29043b-6d0a-5cee-996c-411b7d1838e0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRadaffd2eacae556ebe5a48933afc330e [GND]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 4.6609
+                            },
+                            "uuid": "adaffd2e-acae-556e-be5a-48933afc330e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2789d899f70356bca58fff49e6487dc8 [VCC]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 5.6896
+                            },
+                            "uuid": "2789d899-f703-56bc-a58f-ff49e6487dc8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2789d899f70356bca58fff49e6487dc8 Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 5.6896
+                            },
+                            "uuid": "d1447679-e712-5788-a855-e0f5288d03fa"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R38 [R_Small]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 7.4803
+                            },
+                            "uuid": "726d8c18-58c9-52df-be9f-9032001a5106"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR5f34acc9d80757a084604994dce75278 [GND]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 7.5565
+                            },
+                            "uuid": "5f34acc9-d807-57a0-8460-4994dce75278"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R13 [R_Small]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 7.7343
+                            },
+                            "uuid": "4074044d-5db2-5e85-b2e7-0548d4bf9488"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR552144875a3a5774904e691b691e429b [GND]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 7.8105
+                            },
+                            "uuid": "55214487-5a3a-5774-904e-691b691e429b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R21 [R_Small]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 7.9883
+                            },
+                            "uuid": "8d9f5adf-3f22-5fe2-bd92-98fc8cd18c8d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR17663a56bd7b5a899e353093939dbaed [GND]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 8.0645
+                            },
+                            "uuid": "17663a56-bd7b-5a89-9e35-3093939dbaed"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRb69f69a66a9c5b20b08e1dbacf0da177 [GND]",
+                            "pos": {
+                                "x": 12.9159,
+                                "y": 8.3312
+                            },
+                            "uuid": "b69f69a6-6a9c-5b20-b08e-1dbacf0da177"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRe8c8860e9c005d40ad14b42309a91400 [VCC]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 5.3721
+                            },
+                            "uuid": "e8c8860e-9c00-5d40-ad14-b42309a91400"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRc0a211bb6f355b3c93f50928ec4d355a [VCC]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 5.9817
+                            },
+                            "uuid": "c0a211bb-6f35-5b3c-93f5-0928ec4d355a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRf4049ad45813524aa0b10da38e83cd3c [VCC]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 6.2738
+                            },
+                            "uuid": "f4049ad4-5813-524a-a0b1-0da38e83cd3c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R52 [R_Small]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 6.35
+                            },
+                            "uuid": "ca834bec-953c-517b-9009-9b8cc77cdcdd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRfbff1bf12ee55b29be8578fed2ba49b9 [VCC]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 6.858
+                            },
+                            "uuid": "fbff1bf1-2ee5-5b29-be85-78fed2ba49b9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R58 [R_Small]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 6.9342
+                            },
+                            "uuid": "7c6492fd-379e-530c-8c02-107f3faaebef"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C57 [C_Small]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 7.1882
+                            },
+                            "uuid": "8d91a067-1657-5460-985b-eebdfcb468c7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR71b7d06924b651d8b8e3efbd23502afb [GND]",
+                            "pos": {
+                                "x": 12.9413,
+                                "y": 7.2644
+                            },
+                            "uuid": "71b7d069-24b6-51d8-b8e3-efbd23502afb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol D3 [LED_Small_Filled_Green]",
+                            "pos": {
+                                "x": 12.954,
+                                "y": 5.1181
+                            },
+                            "uuid": "318736c3-4057-577e-ac19-b3fc8c72f10d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR7c0f2ca9dbfe55a09fd34a4128d2bbec [GND]",
+                            "pos": {
+                                "x": 12.954,
+                                "y": 5.1943
+                            },
+                            "uuid": "7c0f2ca9-dbfe-55a0-9fd3-4a4128d2bbec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR8a5b7f35b0b7589586af2d6e610a2b0e [GND]",
+                            "pos": {
+                                "x": 12.9667,
+                                "y": 2.6924
+                            },
+                            "uuid": "8a5b7f35-b0b7-5895-86af-2d6e610a2b0e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRd89c11a9991352f8a26989d0d868c5a5 [GND]",
+                            "pos": {
+                                "x": 12.9794,
+                                "y": 3.8989
+                            },
+                            "uuid": "d89c11a9-9913-52f8-a269-89d0d868c5a5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R30 [R_Small]",
+                            "pos": {
+                                "x": 12.9794,
+                                "y": 9.5631
+                            },
+                            "uuid": "74222f0c-de4d-58da-8e27-fb600e08fea5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol D4 [LED_Small_Filled_Yellow]",
+                            "pos": {
+                                "x": 12.9921,
+                                "y": 8.2677
+                            },
+                            "uuid": "ba1d8b0f-8fe1-5c14-a336-c4bb881899f0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R20 [R_Small]",
+                            "pos": {
+                                "x": 12.9921,
+                                "y": 9.3218
+                            },
+                            "uuid": "91ab5e85-31c0-5e6e-88ad-45d1febbe86a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R34 [R_Small]",
+                            "pos": {
+                                "x": 12.9921,
+                                "y": 9.7536
+                            },
+                            "uuid": "bd40bcc3-4076-5618-990c-e1b865642c9a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol FB2 [FerriteBead_Small]",
+                            "pos": {
+                                "x": 13.0175,
+                                "y": 6.0452
+                            },
+                            "uuid": "25cf0bc3-bb3e-5288-a460-ac8cdae57622"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R12 [R_Small]",
+                            "pos": {
+                                "x": 13.0175,
+                                "y": 9.1059
+                            },
+                            "uuid": "55b2deb1-5f6a-5097-950a-7720a0491b5c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRc52545c6b84b564d9a123a189d8b1c8f [VCC]",
+                            "pos": {
+                                "x": 13.0302,
+                                "y": 3.5941
+                            },
+                            "uuid": "c52545c6-b84b-564d-9a12-3a189d8b1c8f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR9453dd0031d75cc28113af2929dbc147 [VCC]",
+                            "pos": {
+                                "x": 13.0302,
+                                "y": 4.0513
+                            },
+                            "uuid": "9453dd00-31d7-5cc2-8113-af2929dbc147"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R25 [R_Small]",
+                            "pos": {
+                                "x": 13.0302,
+                                "y": 8.5725
+                            },
+                            "uuid": "106e408c-d9ac-5198-953b-060f097dcc5a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRaacd99d5e9c259b59e14a12a502fb7a3 [GND]",
+                            "pos": {
+                                "x": 13.0302,
+                                "y": 8.6487
+                            },
+                            "uuid": "aacd99d5-e9c2-59b5-9e14-a12a502fb7a3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0c77fc295ea353a19d364bd14fc9adfc [GND]",
+                            "pos": {
+                                "x": 13.0429,
+                                "y": 1.7272
+                            },
+                            "uuid": "0c77fc29-5ea3-53a1-9d36-4bd14fc9adfc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0c77fc295ea353a19d364bd14fc9adfc Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 13.0429,
+                                "y": 1.7272
+                            },
+                            "uuid": "febd049e-33c8-5fa1-a836-b6e0b4f80bcb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR515198ad16b859b883bb5cf0ccbff0c5 [VCC]",
+                            "pos": {
+                                "x": 13.0556,
+                                "y": 5.6896
+                            },
+                            "uuid": "515198ad-16b8-59b8-83bb-5cf0ccbff0c5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R39 [R_Small]",
+                            "pos": {
+                                "x": 13.0556,
+                                "y": 7.4803
+                            },
+                            "uuid": "99cf7892-eb84-5048-afaf-bb6cea1fd3bc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRc9f8114dae335600a38a57d295a41bb8 [GND]",
+                            "pos": {
+                                "x": 13.0556,
+                                "y": 7.5565
+                            },
+                            "uuid": "c9f8114d-ae33-5600-a38a-57d295a41bb8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol FID2 [Fiducial]",
+                            "pos": {
+                                "x": 13.0556,
+                                "y": 9.9314
+                            },
+                            "uuid": "b7236e4c-e095-5cef-88c4-dccebc844153"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR5cab60edc0d353969b89c6a14b130c74 [VCC]",
+                            "pos": {
+                                "x": 13.0683,
+                                "y": 5.3594
+                            },
+                            "uuid": "5cab60ed-c0d3-5396-9b89-c6a14b130c74"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R41 [R_Small]",
+                            "pos": {
+                                "x": 13.0683,
+                                "y": 5.4356
+                            },
+                            "uuid": "81255951-937c-54e9-85d1-9fbd70323e50"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R15 [R_Small]",
+                            "pos": {
+                                "x": 13.0683,
+                                "y": 7.7343
+                            },
+                            "uuid": "80974604-b2ec-5795-b789-cd664d68c3b7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR1b99a68c15a0535aa20e0ca2b8527522 [GND]",
+                            "pos": {
+                                "x": 13.0683,
+                                "y": 7.8105
+                            },
+                            "uuid": "1b99a68c-15a0-535a-a20e-0ca2b8527522"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R23 [R_Small]",
+                            "pos": {
+                                "x": 13.0683,
+                                "y": 7.9883
+                            },
+                            "uuid": "f24f9c4d-bd77-5006-a0b8-12ca17e366ef"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRc0bdaa2639555a1e9777ef97083f2237 [GND]",
+                            "pos": {
+                                "x": 13.0683,
+                                "y": 8.0645
+                            },
+                            "uuid": "c0bdaa26-3955-5a1e-9777-ef97083f2237"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol D1 [LED_Small_Filled_Green]",
+                            "pos": {
+                                "x": 13.0683,
+                                "y": 8.8773
+                            },
+                            "uuid": "68dad094-ef8c-5a0f-b872-530522f6c1e5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR810ab945edfc59d8a0f4a16b23f95496 [VCC]",
+                            "pos": {
+                                "x": 13.081,
+                                "y": 6.5532
+                            },
+                            "uuid": "810ab945-edfc-59d8-a0f4-a16b23f95496"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R26 [R_Small]",
+                            "pos": {
+                                "x": 13.081,
+                                "y": 6.6294
+                            },
+                            "uuid": "ae7a7710-4706-51b6-b7e7-d926299cfe56"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR213c2040b93b5137832e853225375d47 [VCC]",
+                            "pos": {
+                                "x": 13.0937,
+                                "y": 2.032
+                            },
+                            "uuid": "213c2040-b93b-5137-832e-853225375d47"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRf2aca5fc8a6159b9aeef7b84ca4accfe [VCC]",
+                            "pos": {
+                                "x": 13.0937,
+                                "y": 5.9817
+                            },
+                            "uuid": "f2aca5fc-8a61-59b9-aeef-7b84ca4accfe"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R1 [R_Small]",
+                            "pos": {
+                                "x": 13.0937,
+                                "y": 7.1882
+                            },
+                            "uuid": "fae3ba1d-e3f6-5430-ac0c-2ead98b2d830"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR68497eb5ba815a8f9603dbd02325b146 [GND]",
+                            "pos": {
+                                "x": 13.0937,
+                                "y": 7.2644
+                            },
+                            "uuid": "68497eb5-ba81-5a8f-9603-dbd02325b146"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR968686de0230597694114a61818a10e1 [VCC]",
+                            "pos": {
+                                "x": 13.1064,
+                                "y": 6.2738
+                            },
+                            "uuid": "968686de-0230-5976-9411-4a61818a10e1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R55 [R_Small]",
+                            "pos": {
+                                "x": 13.1064,
+                                "y": 6.35
+                            },
+                            "uuid": "fa646113-4573-5628-b670-7340b5d5e58a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR213af6627d1959b6a699f520f216dda6 [VCC]",
+                            "pos": {
+                                "x": 13.1064,
+                                "y": 6.858
+                            },
+                            "uuid": "213af662-7d19-59b6-a699-f520f216dda6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R59 [R_Small]",
+                            "pos": {
+                                "x": 13.1064,
+                                "y": 6.9342
+                            },
+                            "uuid": "df4b41d9-f8dc-5fa3-99ab-cf9b20c10314"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U8 [SN74LVC8T245]",
+                            "pos": {
+                                "x": 13.1191,
+                                "y": 2.3622
+                            },
+                            "uuid": "fe5ba76b-5657-5664-8843-118568fa38a7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6157b16caf9b53e5a14a5d215ef85801 [GND]",
+                            "pos": {
+                                "x": 13.1191,
+                                "y": 2.6924
+                            },
+                            "uuid": "6157b16c-af9b-53e5-a14a-5d215ef85801"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR7db72506a0675ba386437a744a7dd1bc [VCC]",
+                            "pos": {
+                                "x": 13.1191,
+                                "y": 2.9718
+                            },
+                            "uuid": "7db72506-a067-5ba3-8643-7a744a7dd1bc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR7db72506a0675ba386437a744a7dd1bc Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 13.1191,
+                                "y": 2.9718
+                            },
+                            "uuid": "2cee7ef2-818f-5191-b538-d313e93cbded"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol H1 [MountingHole_Pad]",
+                            "pos": {
+                                "x": 13.1191,
+                                "y": 4.7879
+                            },
+                            "uuid": "b9855fcc-4e57-56ee-a9f9-c8367af65eaf"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRccc8f034dd4d5d0ea3efb77b4a497726 [GND]",
+                            "pos": {
+                                "x": 13.1191,
+                                "y": 4.8641
+                            },
+                            "uuid": "ccc8f034-dd4d-5d0e-a3ef-b77b4a497726"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol L2 [L_Small]",
+                            "pos": {
+                                "x": 13.1318,
+                                "y": 5.7404
+                            },
+                            "uuid": "05b1e904-46b9-5ef7-b48f-bcaf7630db74"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U12 [TLV62569DBV]",
+                            "pos": {
+                                "x": 13.1572,
+                                "y": 4.1529
+                            },
+                            "uuid": "b25ef883-6a20-594c-bec6-3dd4a812fca5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2564db3803395bc58c24e65003ddadb6 [GND]",
+                            "pos": {
+                                "x": 13.1572,
+                                "y": 4.2799
+                            },
+                            "uuid": "2564db38-0339-5bc5-8c24-e65003ddadb6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR86cf4f852ab15fbd9b15866e82e98b67 [GND]",
+                            "pos": {
+                                "x": 13.1699,
+                                "y": 1.8034
+                            },
+                            "uuid": "86cf4f85-2ab1-5fbd-9b15-866e82e98b67"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWReb09f506b0d65559afaad5d3053f6a10 [VCC]",
+                            "pos": {
+                                "x": 13.1826,
+                                "y": 3.5941
+                            },
+                            "uuid": "eb09f506-b0d6-5559-afaa-d5d3053f6a10"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [24LC128]",
+                            "pos": {
+                                "x": 13.1826,
+                                "y": 3.7211
+                            },
+                            "uuid": "286ef92b-91eb-55e4-b7c1-592c4eb154bb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6820f0a510bb50d2940c532057e778a0 [GND]",
+                            "pos": {
+                                "x": 13.1826,
+                                "y": 3.8481
+                            },
+                            "uuid": "6820f0a5-10bb-50d2-940c-532057e778a0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R28 [R_Small]",
+                            "pos": {
+                                "x": 13.1826,
+                                "y": 6.0452
+                            },
+                            "uuid": "17e4bdc3-1aa9-5bf3-a7d5-d7321383a747"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0707f5f6d0075ca7940ce703c0d73a3e [GND]",
+                            "pos": {
+                                "x": 13.1826,
+                                "y": 6.1214
+                            },
+                            "uuid": "0707f5f6-d007-5ca7-940c-e703c0d73a3e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR568e7a28a97d5c1da5ffd93407aec1c4 [VCC]",
+                            "pos": {
+                                "x": 13.1953,
+                                "y": 1.9812
+                            },
+                            "uuid": "568e7a28-a97d-5c1d-a5ff-d93407aec1c4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R5 [R_Small]",
+                            "pos": {
+                                "x": 13.1953,
+                                "y": 8.2677
+                            },
+                            "uuid": "9500c6c5-fae4-5e35-9be0-56e7df0f7099"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR8f9f412d37285e608d91d5e0c4a888e6 [GND]",
+                            "pos": {
+                                "x": 13.1953,
+                                "y": 8.3439
+                            },
+                            "uuid": "8f9f412d-3728-5e60-8d91-d5e0c4a888e6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR3c0b40142a005e01bd0e900bad9f127f [VCC]",
+                            "pos": {
+                                "x": 13.208,
+                                "y": 5.6896
+                            },
+                            "uuid": "3c0b4014-2a00-5e01-bd0e-900bad9f127f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRf9f8949af79250b9b09ca179582cd8ca [VCC]",
+                            "pos": {
+                                "x": 13.2207,
+                                "y": 1.2954
+                            },
+                            "uuid": "f9f8949a-f792-50b9-b09c-a179582cd8ca"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR21a7f5ea906a5080a0315638fd54527c [VCC]",
+                            "pos": {
+                                "x": 13.2207,
+                                "y": 4.4323
+                            },
+                            "uuid": "21a7f5ea-906a-5080-a031-5638fd54527c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U4 [USBLC6-2SC6]",
+                            "pos": {
+                                "x": 13.2207,
+                                "y": 4.5339
+                            },
+                            "uuid": "aa94e327-4d63-5c3f-a92b-22bf253afb74"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRa7e6d8e9d3205f83b13040a83f0c1cd4 [GND]",
+                            "pos": {
+                                "x": 13.2207,
+                                "y": 4.6609
+                            },
+                            "uuid": "a7e6d8e9-d320-5f83-b130-40a83f0c1cd4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol Y2 [Crystal_GND24_Small]",
+                            "pos": {
+                                "x": 13.2334,
+                                "y": 5.1181
+                            },
+                            "uuid": "4b8fa68c-8b6f-598c-8b55-be9ca50b7703"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0d0a95bf32e65a00be9280a364f65824 [GND]",
+                            "pos": {
+                                "x": 13.2334,
+                                "y": 5.1943
+                            },
+                            "uuid": "0d0a95bf-32e6-5a00-be92-80a364f65824"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR9390da3aed485423bbfafca183c419ac [VCC]",
+                            "pos": {
+                                "x": 13.2334,
+                                "y": 5.3594
+                            },
+                            "uuid": "9390da3a-ed48-5423-bbfa-fca183c419ac"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R47 [R_Small]",
+                            "pos": {
+                                "x": 13.2334,
+                                "y": 5.4356
+                            },
+                            "uuid": "2222a18a-5baf-5f02-9daf-b5ec41d2ede4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR436a5bc943125117a81eea0311f77238 [VCC]",
+                            "pos": {
+                                "x": 13.2461,
+                                "y": 2.9718
+                            },
+                            "uuid": "436a5bc9-4312-5117-a81e-ea0311f77238"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U9 [SN74LVC2T45DCUR]",
+                            "pos": {
+                                "x": 13.2715,
+                                "y": 3.1496
+                            },
+                            "uuid": "c79d02a0-d2f8-5a4a-9b25-5dc475aec8e5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR5efc25a017275de781d3710516676cc7 [GND]",
+                            "pos": {
+                                "x": 13.2715,
+                                "y": 3.3274
+                            },
+                            "uuid": "5efc25a0-1727-5de7-81d3-710516676cc7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR252d56c3a1c55d03817758c103db7132 [VCC]",
+                            "pos": {
+                                "x": 13.2842,
+                                "y": 4.0513
+                            },
+                            "uuid": "252d56c3-a1c5-5d03-8177-58c103db7132"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR8bc17bad1dab57418865843b7e31354d [GND]",
+                            "pos": {
+                                "x": 13.335,
+                                "y": 3.8481
+                            },
+                            "uuid": "8bc17bad-1dab-5741-8865-843b7e31354d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRcde8b60669435592be43db55373fdeb5 [VCC]",
+                            "pos": {
+                                "x": 13.3477,
+                                "y": 2.921
+                            },
+                            "uuid": "cde8b606-6943-5592-be43-db55373fdeb5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR5431c44f0b675ac0a5bf01ef056194a7 [VCC]",
+                            "pos": {
+                                "x": 13.3604,
+                                "y": 5.6642
+                            },
+                            "uuid": "5431c44f-0b67-5ac0-a5bf-01ef056194a7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R2 [R_Small]",
+                            "pos": {
+                                "x": 13.3604,
+                                "y": 5.7404
+                            },
+                            "uuid": "bc8c9d02-0123-50b9-9529-da4c4a9b73ae"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR01d7fa6cd8f65ec29a889c37b52e35a1 [VCC]",
+                            "pos": {
+                                "x": 13.3858,
+                                "y": 4.0513
+                            },
+                            "uuid": "01d7fa6c-d8f6-5ec2-9a88-9c37b52e35a1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR01d7fa6cd8f65ec29a889c37b52e35a1 Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 13.3858,
+                                "y": 4.0513
+                            },
+                            "uuid": "8b283263-f622-50b3-ba5d-e61f267d49ee"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRd3d5838df6c95edf98795b214db21b19 [VCC]",
+                            "pos": {
+                                "x": 13.4239,
+                                "y": 2.286
+                            },
+                            "uuid": "d3d5838d-f6c9-5edf-9879-5b214db21b19"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C1 [C_Small]",
+                            "pos": {
+                                "x": 13.4239,
+                                "y": 2.3622
+                            },
+                            "uuid": "28a07309-7bba-5f2c-a6f0-6235945c32d0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR4c8897878ad35c2aa326e248eb8594b0 [GND]",
+                            "pos": {
+                                "x": 13.4239,
+                                "y": 2.4384
+                            },
+                            "uuid": "4c889787-8ad3-5c2a-a326-e248eb8594b0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0483e038392e5f969237c74a624dfda9 [VCC]",
+                            "pos": {
+                                "x": 13.4366,
+                                "y": 5.0419
+                            },
+                            "uuid": "0483e038-392e-5f96-9237-c74a624dfda9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol R40 [R_Small]",
+                            "pos": {
+                                "x": 13.4366,
+                                "y": 5.1181
+                            },
+                            "uuid": "fb208d9b-4ac8-57a7-9077-df77548e1f3f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6a9d630099cd55b8b205a3c675a22acf [VCC]",
+                            "pos": {
+                                "x": 13.462,
+                                "y": 3.6449
+                            },
+                            "uuid": "6a9d6300-99cd-55b8-b205-a3c675a22acf"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C7 [C_Small]",
+                            "pos": {
+                                "x": 13.462,
+                                "y": 3.7211
+                            },
+                            "uuid": "5a82b866-ec18-5235-9940-4a82d05f3227"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2af588a123bc51ff8e385be8517ad8b7 [GND]",
+                            "pos": {
+                                "x": 13.462,
+                                "y": 3.7973
+                            },
+                            "uuid": "2af588a1-23bc-51ff-8e38-5be8517ad8b7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol H2 [MountingHole_Pad]",
+                            "pos": {
+                                "x": 13.462,
+                                "y": 4.7879
+                            },
+                            "uuid": "559955d8-fa6e-5336-b163-4da49dac212c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2e2365f5d3a35512a58ef86a83700e41 [GND]",
+                            "pos": {
+                                "x": 13.462,
+                                "y": 4.8641
+                            },
+                            "uuid": "2e2365f5-d3a3-5512-a58e-f86a83700e41"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U13 [TLV62569DBV]",
+                            "pos": {
+                                "x": 13.5128,
+                                "y": 4.1529
+                            },
+                            "uuid": "6f0c57be-1dba-54d0-97fb-72176d49beec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRcf451f694168541f9e4718cd66d67f79 [GND]",
+                            "pos": {
+                                "x": 13.5128,
+                                "y": 4.2799
+                            },
+                            "uuid": "cf451f69-4168-541f-9e47-18cd66d67f79"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U10 [XC6SLX9-TQG144]",
+                            "pos": {
+                                "x": 13.5255,
+                                "y": 1.524
+                            },
+                            "uuid": "5482eba1-715b-5330-96c2-16a2738b7eea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRaf340c05e25f5038a4e9358d483d136c [VCC]",
+                            "pos": {
+                                "x": 13.5255,
+                                "y": 4.4323
+                            },
+                            "uuid": "af340c05-e25f-5038-a4e9-358d483d136c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U5 [USBLC6-2SC6]",
+                            "pos": {
+                                "x": 13.5255,
+                                "y": 4.5339
+                            },
+                            "uuid": "b1f9686b-92ba-5651-b778-6d8701994e31"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2d2cd259408356f6bf632031cf9e3764 [GND]",
+                            "pos": {
+                                "x": 13.5255,
+                                "y": 4.6609
+                            },
+                            "uuid": "2d2cd259-4083-56f6-bf63-2031cf9e3764"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRe1735663de1958a4bf97d9d7ebf3c8a0 [GND]",
+                            "pos": {
+                                "x": 13.589,
+                                "y": 3.429
+                            },
+                            "uuid": "e1735663-de19-58a4-bf97-d9d7ebf3c8a0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C4 [C_Small]",
+                            "pos": {
+                                "x": 13.6271,
+                                "y": 2.3622
+                            },
+                            "uuid": "07257904-3135-56d4-974c-c22d4adcbc4a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol J4 [USB_C_Receptacle_USB2.0_16P]",
+                            "pos": {
+                                "x": 13.6271,
+                                "y": 3.1496
+                            },
+                            "uuid": "977e3708-026a-5391-a2cf-a65434fcf817"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR1b87bbf38f1753a5842386535c2f24b2 [VCC]",
+                            "pos": {
+                                "x": 13.6398,
+                                "y": 4.0513
+                            },
+                            "uuid": "1b87bbf3-8f17-53a5-8423-86535c2f24b2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C8 [C_Small]",
+                            "pos": {
+                                "x": 13.6906,
+                                "y": 3.7211
+                            },
+                            "uuid": "4d73e502-dc50-5b53-85e5-5dddb780ea46"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol H3 [MountingHole_Pad]",
+                            "pos": {
+                                "x": 13.8049,
+                                "y": 4.7879
+                            },
+                            "uuid": "cc7e77af-aad5-5431-9019-5b31a35f631d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRd44f676e83a556e18f923de000598342 [GND]",
+                            "pos": {
+                                "x": 13.8049,
+                                "y": 4.8641
+                            },
+                            "uuid": "d44f676e-83a5-56e1-8f92-3de000598342"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR88412259ab695874aa1b63f24f38949a [VCC]",
+                            "pos": {
+                                "x": 13.8303,
+                                "y": 1.2954
+                            },
+                            "uuid": "88412259-ab69-5874-aa1b-63f24f38949a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C29 [C_Small]",
+                            "pos": {
+                                "x": 13.8303,
+                                "y": 2.3622
+                            },
+                            "uuid": "58d299c0-8924-5f84-a098-bd3a66534eb5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR810d2902305051b58a557b10326c75b8 [VCC]",
+                            "pos": {
+                                "x": 13.8303,
+                                "y": 2.921
+                            },
+                            "uuid": "810d2902-3050-51b5-8a55-7b10326c75b8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U10 [XC6SLX9-TQG144]",
+                            "pos": {
+                                "x": 13.843,
+                                "y": 0.7239
+                            },
+                            "uuid": "6d99a561-a274-53ec-95f4-58cc6cef74a5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2b19c469c524590aa2830945ff49980c [VCC]",
+                            "pos": {
+                                "x": 13.8557,
+                                "y": 4.0513
+                            },
+                            "uuid": "2b19c469-c524-590a-a283-0945ff49980c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2b19c469c524590aa2830945ff49980c Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 13.8557,
+                                "y": 4.0513
+                            },
+                            "uuid": "7433533f-d34a-5aeb-ad46-92f6fc8f54fe"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U6 [USBLC6-2SC6]",
+                            "pos": {
+                                "x": 13.8557,
+                                "y": 4.1529
+                            },
+                            "uuid": "7f65a06d-d4ff-5a0c-a5a3-0ed9c8c1aa40"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRd4e99f10f92d5756b841a6a446c9055c [GND]",
+                            "pos": {
+                                "x": 13.8557,
+                                "y": 4.2799
+                            },
+                            "uuid": "d4e99f10-f92d-5756-b841-a6a446c9055c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRfb17e3d360ac55cfa8900564f3111f7b [GND]",
+                            "pos": {
+                                "x": 13.8811,
+                                "y": 1.8034
+                            },
+                            "uuid": "fb17e3d3-60ac-55cf-a890-0564f3111f7b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRf5e6d475dabe564dbc874fb443888187 [VCC]",
+                            "pos": {
+                                "x": 13.9192,
+                                "y": 0.2413
+                            },
+                            "uuid": "f5e6d475-dabe-564d-bc87-4fb443888187"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR3c0d4e14aa4d54da9592b2eae02405b8 [VCC]",
+                            "pos": {
+                                "x": 13.97,
+                                "y": 3.5814
+                            },
+                            "uuid": "3c0d4e14-aa4d-54da-9592-b2eae02405b8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR790314d10ec65de493eeeca72411dca2 [VCC]",
+                            "pos": {
+                                "x": 14.0208,
+                                "y": 3.6322
+                            },
+                            "uuid": "790314d1-0ec6-5de4-93ee-eca72411dca2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C30 [C_Small]",
+                            "pos": {
+                                "x": 14.0335,
+                                "y": 2.3622
+                            },
+                            "uuid": "e886a254-8699-53db-b249-42c286c11240"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol J3 [Conn_02x10_Odd_Even]",
+                            "pos": {
+                                "x": 14.1097,
+                                "y": 3.1496
+                            },
+                            "uuid": "eadc5ed4-7930-524f-b17b-11c0ba487600"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol J5 [Conn_01x03]",
+                            "pos": {
+                                "x": 14.1224,
+                                "y": 3.7211
+                            },
+                            "uuid": "24e6f8ce-c759-5e42-9d5a-2a4d8fb05532"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR560bdd004c7d59ad902a8813d47e68c2 [GND]",
+                            "pos": {
+                                "x": 14.2367,
+                                "y": 3.3401
+                            },
+                            "uuid": "560bdd00-4c7d-59ad-902a-8813d47e68c2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR9dcaab65b8245b21be89e69679d0d22d [VCC]",
+                            "pos": {
+                                "x": 14.3002,
+                                "y": 2.1336
+                            },
+                            "uuid": "9dcaab65-b824-5b21-be89-e69679d0d22d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRac00a360c5415280b77ec2e0a0d0ef5f [VCC]",
+                            "pos": {
+                                "x": 14.478,
+                                "y": 2.1336
+                            },
+                            "uuid": "ac00a360-c541-5280-b77e-c2e0a0d0ef5f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U7 [SN74LVC245APW]",
+                            "pos": {
+                                "x": 14.478,
+                                "y": 2.3622
+                            },
+                            "uuid": "8c6fbd11-20e4-50e0-b459-9092915ccf9d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6d3b5dc16dbb5f78b6ea686a210234a0 [GND]",
+                            "pos": {
+                                "x": 14.478,
+                                "y": 2.5908
+                            },
+                            "uuid": "6d3b5dc1-6dbb-5f78-b6ea-686a210234a0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRa01c4e3aedf252d7905a235a99a59f4f [VCC]",
+                            "pos": {
+                                "x": 14.5796,
+                                "y": 0.6477
+                            },
+                            "uuid": "a01c4e3a-edf2-52d7-905a-235a99a59f4f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C5 [C_Small]",
+                            "pos": {
+                                "x": 14.5796,
+                                "y": 0.7239
+                            },
+                            "uuid": "a1e1aa23-2540-5ca4-9b6f-6f78f452b484"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRba58f063e57b5ef6ace243bfdf0d762a [GND]",
+                            "pos": {
+                                "x": 14.5796,
+                                "y": 0.8001
+                            },
+                            "uuid": "ba58f063-e57b-5ef6-ace2-43bfdf0d762a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C6 [C_Small]",
+                            "pos": {
+                                "x": 14.8209,
+                                "y": 0.7239
+                            },
+                            "uuid": "108fe2af-8eda-5a77-b7b9-de1455b07538"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C9 [C_Small]",
+                            "pos": {
+                                "x": 15.0622,
+                                "y": 0.7239
+                            },
+                            "uuid": "b4fb17b9-a667-5454-bbae-c778d44a5771"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C10 [C_Small]",
+                            "pos": {
+                                "x": 15.3162,
+                                "y": 0.7239
+                            },
+                            "uuid": "35269365-aed1-5902-86e8-25db55127d54"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C11 [C_Small]",
+                            "pos": {
+                                "x": 15.5702,
+                                "y": 0.7239
+                            },
+                            "uuid": "cf44afb7-a180-5798-aa82-7adaa2c95f1e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C12 [C_Small]",
+                            "pos": {
+                                "x": 15.8242,
+                                "y": 0.7239
+                            },
+                            "uuid": "631fef51-5d8f-5501-80c8-9b055b250493"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C13 [C_Small]",
+                            "pos": {
+                                "x": 16.0782,
+                                "y": 0.7239
+                            },
+                            "uuid": "1ef7ce4f-84e0-5331-bdd4-09387a881505"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C14 [C_Small]",
+                            "pos": {
+                                "x": 16.3322,
+                                "y": 0.7239
+                            },
+                            "uuid": "2a4fd7ee-f034-53e2-bcca-ad500c59aca8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C15 [C_Small]",
+                            "pos": {
+                                "x": 16.5862,
+                                "y": 0.7239
+                            },
+                            "uuid": "29af194b-da78-552a-96ed-51f7a945ec82"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C16 [C_Small]",
+                            "pos": {
+                                "x": 16.8402,
+                                "y": 0.7239
+                            },
+                            "uuid": "bca92d97-693e-5c90-9103-bfd3c97840b2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C17 [C_Small]",
+                            "pos": {
+                                "x": 17.0942,
+                                "y": 0.7239
+                            },
+                            "uuid": "53b08f63-e6ed-5895-9987-22576ed2a885"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C18 [C_Small]",
+                            "pos": {
+                                "x": 17.3482,
+                                "y": 0.7239
+                            },
+                            "uuid": "2c7af43e-b112-5a94-86c3-6a8de503e183"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C20 [C_Small]",
+                            "pos": {
+                                "x": 17.6022,
+                                "y": 0.7239
+                            },
+                            "uuid": "ab29b6f9-bbae-53a0-9b2a-656c39dd6ae8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C21 [C_Small]",
+                            "pos": {
+                                "x": 17.8562,
+                                "y": 0.7239
+                            },
+                            "uuid": "a47bb7d2-d584-5735-9c71-36a46e505e01"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C22 [C_Small]",
+                            "pos": {
+                                "x": 18.1102,
+                                "y": 0.7239
+                            },
+                            "uuid": "47b7236f-54ac-544a-abf9-2ea42175e7e9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C23 [C_Small]",
+                            "pos": {
+                                "x": 18.3642,
+                                "y": 0.7239
+                            },
+                            "uuid": "b56e072a-fff3-5dd4-84fe-48c6d276fe9e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C24 [C_Small]",
+                            "pos": {
+                                "x": 18.6182,
+                                "y": 0.7239
+                            },
+                            "uuid": "37ae758f-b490-561b-a892-1fd841243b3c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C25 [C_Small]",
+                            "pos": {
+                                "x": 18.8722,
+                                "y": 0.7239
+                            },
+                            "uuid": "48cb86a6-c764-56e8-a562-965ad381c6ed"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C26 [C_Small]",
+                            "pos": {
+                                "x": 19.1262,
+                                "y": 0.7239
+                            },
+                            "uuid": "414b8bc3-743b-577d-b982-18187abe9728"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C27 [C_Small]",
+                            "pos": {
+                                "x": 19.3802,
+                                "y": 0.7239
+                            },
+                            "uuid": "f612d51e-b5b6-5b1d-9ef0-166630e21f7e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C28 [C_Small]",
+                            "pos": {
+                                "x": 19.6342,
+                                "y": 0.7239
+                            },
+                            "uuid": "56bc714b-91c3-581c-b25f-1384a36cbffd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C31 [C_Small]",
+                            "pos": {
+                                "x": 19.8755,
+                                "y": 0.7239
+                            },
+                            "uuid": "0a6add64-17d9-5e0e-ad5f-dcdd67363368"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C32 [C_Small]",
+                            "pos": {
+                                "x": 20.1295,
+                                "y": 0.7239
+                            },
+                            "uuid": "e5ceb40a-dd17-522b-8f5f-c4a72369e217"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C33 [C_Small]",
+                            "pos": {
+                                "x": 20.3835,
+                                "y": 0.7239
+                            },
+                            "uuid": "bd5a4b31-2a8a-5432-ab42-bac2bf19a820"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C34 [C_Small]",
+                            "pos": {
+                                "x": 20.6375,
+                                "y": 0.7239
+                            },
+                            "uuid": "e21f4d96-a173-5464-bb9d-9293f249d9a3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C35 [C_Small]",
+                            "pos": {
+                                "x": 20.8915,
+                                "y": 0.7239
+                            },
+                            "uuid": "cb8569be-7003-5dc2-b6c0-c17c7e7b75b5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C36 [C_Small]",
+                            "pos": {
+                                "x": 21.1455,
+                                "y": 0.7239
+                            },
+                            "uuid": "2992268a-f68a-5e47-be35-84b3669da79a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C45 [C_Small]",
+                            "pos": {
+                                "x": 21.3995,
+                                "y": 0.7239
+                            },
+                            "uuid": "4fefa1fe-5723-50a6-8051-d5aa233ceb22"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C46 [C_Small]",
+                            "pos": {
+                                "x": 21.6535,
+                                "y": 0.7239
+                            },
+                            "uuid": "afc58857-80cd-5861-971b-9d43208a6c12"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C55 [C_Small]",
+                            "pos": {
+                                "x": 21.9075,
+                                "y": 0.7239
+                            },
+                            "uuid": "dcc6dfb9-6649-543e-a752-7d195fac670e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C47 [C_Small]",
+                            "pos": {
+                                "x": 22.1615,
+                                "y": 0.7239
+                            },
+                            "uuid": "8b4125b0-e6f6-526b-942a-a1671a86542f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C48 [C_Small]",
+                            "pos": {
+                                "x": 22.4155,
+                                "y": 0.7239
+                            },
+                            "uuid": "ede3583c-6d0b-591a-bfd0-d2725da8f592"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C49 [C_Small]",
+                            "pos": {
+                                "x": 22.6695,
+                                "y": 0.7239
+                            },
+                            "uuid": "439211d8-804c-59f3-9ffa-7e431e2aaac3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C50 [C_Small]",
+                            "pos": {
+                                "x": 22.9235,
+                                "y": 0.7239
+                            },
+                            "uuid": "5719892b-5297-52f7-b35a-b54751fcf0d9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C51 [C_Small]",
+                            "pos": {
+                                "x": 23.1775,
+                                "y": 0.7239
+                            },
+                            "uuid": "11cbd44b-3cd7-5277-9629-7c7fc6f3fa26"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C52 [C_Small]",
+                            "pos": {
+                                "x": 23.4315,
+                                "y": 0.7239
+                            },
+                            "uuid": "c797a35e-c0db-59d2-af25-02f3dd36e724"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C53 [C_Small]",
+                            "pos": {
+                                "x": 23.6855,
+                                "y": 0.7239
+                            },
+                            "uuid": "4dc42329-80d8-54df-9173-0ecece3bc355"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C54 [C_Small]",
+                            "pos": {
+                                "x": 23.9395,
+                                "y": 0.7239
+                            },
+                            "uuid": "1ef83b9e-12ce-58e0-88a5-8cba1f996b92"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C56 [C_Small]",
+                            "pos": {
+                                "x": 24.1935,
+                                "y": 0.7239
+                            },
+                            "uuid": "41d23803-6202-5883-9242-a8edbe55aaf5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2a26e27a790654d1aa0433cdac0832b2 [VCC]",
+                            "pos": {
+                                "x": 24.6507,
+                                "y": 0.1651
+                            },
+                            "uuid": "2a26e27a-7906-54d1-aa04-33cdac0832b2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR2a26e27a790654d1aa0433cdac0832b2 Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 24.6507,
+                                "y": 0.1651
+                            },
+                            "uuid": "1c1161f5-decf-5356-89b2-f08de5c97c38"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR6529b597e75056d2952baee1ce56a6bc [GND]",
+                            "pos": {
+                                "x": 24.6507,
+                                "y": 1.2827
+                            },
+                            "uuid": "6529b597-e750-56d2-952b-aee1ce56a6bc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol U11 [CY7C68013A-56PVX]",
+                            "pos": {
+                                "x": 24.7015,
+                                "y": 0.7239
+                            },
+                            "uuid": "15b5a9e1-f9a7-52d1-b54c-acc65f49b9b8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWRdab4cb6995015b1d894a053c9005bb61 [VCC]",
+                            "pos": {
+                                "x": 24.7523,
+                                "y": 0.1143
+                            },
+                            "uuid": "dab4cb69-9501-5b1d-894a-053c9005bb61"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR3741002d32ff541191db25af7c948867 [VCC]",
+                            "pos": {
+                                "x": 25.1079,
+                                "y": 0.6477
+                            },
+                            "uuid": "3741002d-32ff-5411-91db-25af7c948867"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C2 [C_Small]",
+                            "pos": {
+                                "x": 25.1079,
+                                "y": 0.7239
+                            },
+                            "uuid": "107309d2-c6d0-57b8-a91c-49131f80a9bb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR279285bd1c895802a0663cfb1df1b495 [GND]",
+                            "pos": {
+                                "x": 25.1079,
+                                "y": 0.8001
+                            },
+                            "uuid": "279285bd-1c89-5802-a066-3cfb1df1b495"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C3 [C_Small]",
+                            "pos": {
+                                "x": 25.3492,
+                                "y": 0.7239
+                            },
+                            "uuid": "da0d4a01-4784-55fd-ae76-2a090389b5bb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C39 [C_Small]",
+                            "pos": {
+                                "x": 25.5905,
+                                "y": 0.7239
+                            },
+                            "uuid": "80e5f82f-1953-5a0b-bc90-ae6090d69824"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C40 [C_Small]",
+                            "pos": {
+                                "x": 25.8445,
+                                "y": 0.7239
+                            },
+                            "uuid": "136672df-4e36-5d24-b83a-8fcb15a23663"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C41 [C_Small]",
+                            "pos": {
+                                "x": 26.0985,
+                                "y": 0.7239
+                            },
+                            "uuid": "d35db960-b59b-5fb8-952f-967db08654a6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C42 [C_Small]",
+                            "pos": {
+                                "x": 26.3525,
+                                "y": 0.7239
+                            },
+                            "uuid": "b0e7d66f-d0d3-5f56-b52e-f2ab2c74988e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C43 [C_Small]",
+                            "pos": {
+                                "x": 26.6065,
+                                "y": 0.7239
+                            },
+                            "uuid": "f9cb0d52-0f46-59bb-9799-69c85ba7cbfd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library ''",
+                    "items": [
+                        {
+                            "description": "Symbol C44 [C_Small]",
+                            "pos": {
+                                "x": 26.8605,
+                                "y": 0.7239
+                            },
+                            "uuid": "01e945b6-d9d7-5016-a0bc-30d86997fff1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "s6la8.kicad_sch"
+}

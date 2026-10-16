@@ -125,10 +125,10 @@ module lid() {
             translate([x0 + 4.5, -66.1]) text("TR", size = 1.8, valign = "center");
             for (l = leds) translate([l[0], -l[1] - 3.6]) text(l[2], size = 2.0, halign = "center", valign = "center");
             for (j = jumpers) translate([(j[0] + j[1]) / 2, -j[2] + 3.6]) text(j[3], size = 1.8, halign = "center", valign = "center");
-            translate([150, -76]) text("s6la8", size = 9, halign = "center", valign = "center", font = "Liberation Sans:style=Bold");
-            translate([150, -86]) text("8 CH  LOGIC ANALYZER", size = 3, halign = "center", valign = "center");
-            translate([186, -66]) text("BLADE", size = 4, halign = "center", valign = "center", font = "Liberation Sans:style=Bold");
-            translate([186, -112]) text("1.65-5.5 V", size = 2.4, halign = "center", valign = "center");
+            translate([156, -70]) text("s6la8", size = 9, halign = "center", valign = "center", font = "Liberation Sans:style=Bold");
+            translate([156, -78.5]) text("8 CH  LOGIC ANALYZER", size = 3, halign = "center", valign = "center");
+            translate([178, -112]) text("BLADE", size = 4, halign = "center", valign = "center", font = "Liberation Sans:style=Bold");
+            translate([x0 + 4.5, -100.6]) text("1.65-5.5 V", size = 2.0, halign = "center", valign = "center");
         }
     }
 }
