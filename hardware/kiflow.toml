@@ -1,0 +1,417 @@
+# s6la8 floorplan and layout rules for kiflow (board millimetres, origin at
+# the outline's top-left corner, y down).  `kiflow place` turns this into
+# coordinates; see kiflow/place.py for the meaning of each section.
+#
+# Signal flow, left to right: probe header -> series R -> ESD clamp ->
+# 74LVC8T245 -> FPGA -> FX2 -> USB-C.  Mechanical parts (holes, header,
+# USB, jumpers, LEDs under the lid's light pipes) are fixed by the case.
+
+[board]
+grid = 0.25          # passives snap to this
+clearance = 0.2      # courtyard to courtyard
+edge = 0.8           # courtyard to board edge
+
+[nets]
+planes = { GND = "In1.Cu", VCC_3V3 = "In2.Cu" }
+power = ["V5", "VBUS", "VCC_1V2", "SW_1V2", "SW_3V3", "AVCC", "VCCA"]
+power_width = 0.4
+diff = [["USB_D_P", "USB_D_N"]]
+
+# ------------------------------------------------------------------ fixed
+[anchors]
+H1 = [4, 4, 0]
+H2 = [96, 4, 0]
+H3 = [4, 60, 0]
+H4 = [96, 60, 0]
+FID1 = [10, 3, 0]
+FID2 = [90, 3, 0]
+FID3 = [10, 61, 0]
+J_PROBE = [9, 32, 180]
+J_USB = [95.5, 46, 90]
+J_VREF = [16, 57, 90]
+J_MODE = [30, 60.5, 90]
+J_JTAG = [38, 3.5, 90]
+U_FPGA = [50, 26, 0]
+U_SDRAM = [80, 20, 0]
+U_FX2 = [56, 52, 90]
+U_FE = [28.5, 20.5, 0]
+U_FE_AUX = [19, 9.75, 0]
+U_FALLBACK = [33, 49, 90]
+U_EEPROM = [76, 51, 0]
+U_REG_1V2 = [72, 37, 0]
+U_REG_3V3 = [84.5, 37, 0]
+U_ESD_USB = [86, 46, 180]
+Y_FPGA = [33, 27.5, 0]
+Y_FX2 = [47.5, 60.75, 90]
+
+# ------------------------------------------------------------------ probe front end
+# one strip per channel on the header row: series R, pull-down, ESD pair
+[[place]]
+part = "R_CH{0..7}"
+at = "J_PROBE@CH{i}_IN"
+offset = [3.75, 0]
+rot = 0
+
+[[place]]
+part = "R_CH{0..7}_PD"
+at = "J_PROBE@CH{i}_IN"
+offset = [5.75, 0.5]
+rot = 90
+
+[[place]]
+part = "U_ESD_CH{0..3}"
+at = [18.75, 30.75]
+pitch = [0, -5.08]
+rot = 180
+
+[[place]]
+part = "R_EXT_CLK"
+at = "J_PROBE@EXT_CLK_IN"
+offset = [3.75, 0]
+
+[[place]]
+part = "R_EXT_CLK_PD"
+at = "J_PROBE@EXT_CLK_IN"
+offset = [5.75, -0.5]
+rot = 90
+
+[[place]]
+part = "R_TRIG"
+at = "J_PROBE@EXT_CLK_IN"
+offset = [3.75, 1.3]
+
+[[place]]
+part = "R_TRIG_PD"
+at = "J_PROBE@EXT_CLK_IN"
+offset = [5.75, 1.8]
+rot = 90
+
+[[place]]
+part = "C_VCCA_A"
+at = "U_FE"
+offset = [-2.0, -5.0]
+rot = 0
+
+[[place]]
+part = "C_FE"
+at = "U_FE"
+offset = [2.0, -5.0]
+rot = 0
+
+[[place]]
+part = "C_VCCA_B"
+at = "U_FE_AUX"
+offset = [0, -2.5]
+rot = 0
+
+[[place]]
+part = "C_FE_AUX"
+at = "U_FE_AUX"
+offset = [3.0, 1.5]
+rot = 90
+
+# ------------------------------------------------------------------ FPGA
+[[place]]
+part = "C_VCCINT_BULK"
+at = "U_FPGA"
+offset = [13.25, 13.25]
+rot = 90
+
+[[place]]
+part = "C_VCCAUX_BULK"
+at = "U_FPGA"
+offset = [-13.25, -13.25]
+rot = 90
+
+[[place]]
+part = "C_VCCO_BULK"
+at = "U_FPGA"
+offset = [-13.25, 13.25]
+rot = 90
+
+[[place]]
+part = "R_CLK50"
+at = [34.5, 24.25]
+rot = 0
+
+[[place]]
+part = "C_OSC"
+at = "Y_FPGA"
+offset = [-1.25, 2.75]
+rot = 0
+
+[[comb]]
+ic = "U_FPGA"
+parts = ["C_VCCINT_?", "C_VCCAUX_?", "C_VCCO_?", "C_VCCO_1?", "R_M0", "R_M1", "R_CSI_B", "R_RDWR_B",
+         "R_INIT_B", "R_PROGRAM_B", "R_DONE", "R_HSWAPEN", "R_SLRD", "R_SLWR"]
+standoff = 0.5
+gap = 0.25
+
+# ------------------------------------------------------------------ SDRAM
+[[comb]]
+ic = "U_SDRAM"
+parts = ["C_SDRAM_?"]
+standoff = 0.5
+
+[[place]]
+part = "C_SDRAM_BULK"
+at = "U_SDRAM"
+offset = [10.75, 0]
+rot = 90
+
+# ------------------------------------------------------------------ fallback buffer
+[[comb]]
+ic = "U_FALLBACK"
+parts = ["R_FB?", "C_FALLBACK", "R_FB_OE"]
+standoff = 0.5
+
+# ------------------------------------------------------------------ FX2
+[[comb]]
+ic = "U_FX2"
+parts = ["C_FX2_?", "C_AVCC_A", "R_FX2_RESET", "C_FX2_RESET", "R_FX2_WAKEUP", "R_MODE",
+         "R_PKTEND", "R_FIFOADR?", "R_SLOE", "R_IFCLK", "R_CCLK"]
+standoff = 0.5
+
+[[place]]
+part = "C_FX2_BULK"
+at = "U_FX2"
+offset = [-12.0, 0]
+rot = 90
+
+[[place]]
+part = "C_AVCC_B"
+at = [56.0, 61.5]
+rot = 0
+
+[[place]]
+part = "FB_AVCC"
+at = [59.5, 61.5]
+rot = 0
+
+[[place]]
+part = "C_XTALIN"
+at = "Y_FX2"
+offset = [3.0, 0.5]
+rot = 90
+
+[[place]]
+part = "C_XTALOUT"
+at = "Y_FX2"
+offset = [-3.0, 0]
+rot = 90
+
+[[comb]]
+ic = "U_EEPROM"
+parts = ["C_EEPROM", "R_SCL", "R_SDA"]
+standoff = 0.5
+
+# ------------------------------------------------------------------ power: two identical buck cells
+[[place]]
+part = "C_1V2_IN"
+at = "U_REG_1V2"
+offset = [3.25, 0.25]
+rot = 90
+
+[[place]]
+part = "L_1V2"
+at = "U_REG_1V2"
+offset = [-4.5, 0]
+rot = 90
+
+[[place]]
+part = "C_1V2_OUT_A"
+at = "U_REG_1V2"
+offset = [-4.5, 3.75]
+rot = 0
+
+[[place]]
+part = "C_1V2_OUT_B"
+at = "U_REG_1V2"
+offset = [-0.5, 3.75]
+rot = 0
+
+[[place]]
+part = "R_1V2_TOP"
+at = "U_REG_1V2"
+offset = [2.75, -2.75]
+rot = 0
+
+[[place]]
+part = "R_1V2_BOT"
+at = "U_REG_1V2"
+offset = [0.25, -2.75]
+rot = 0
+
+[[place]]
+part = "C_3V3_IN"
+at = "U_REG_3V3"
+offset = [3.25, 0.25]
+rot = 90
+
+[[place]]
+part = "L_3V3"
+at = "U_REG_3V3"
+offset = [-4.5, 0]
+rot = 90
+
+[[place]]
+part = "C_3V3_OUT_A"
+at = "U_REG_3V3"
+offset = [-4.5, 3.75]
+rot = 0
+
+[[place]]
+part = "C_3V3_OUT_B"
+at = "U_REG_3V3"
+offset = [-0.5, 3.75]
+rot = 0
+
+[[place]]
+part = "R_3V3_TOP"
+at = "U_REG_3V3"
+offset = [2.75, -2.75]
+rot = 0
+
+[[place]]
+part = "R_3V3_BOT"
+at = "U_REG_3V3"
+offset = [0.25, -2.75]
+rot = 0
+
+# ------------------------------------------------------------------ USB input
+[[place]]
+part = "R_CC2"
+at = [88.75, 42.25]
+rot = 90
+
+[[place]]
+part = "R_CC1"
+at = [88.75, 49.75]
+rot = 90
+
+[[place]]
+part = "FB_VBUS"
+at = [92.5, 38.5]
+rot = 90
+
+[[place]]
+part = "C_V5_A"
+at = [92.5, 34.25]
+rot = 90
+
+[[place]]
+part = "C_V5_B"
+at = [95.0, 36.75]
+rot = 90
+
+# ------------------------------------------------------------------ status LEDs (lid light pipes)
+# 5 mm apart: the lid's 3.6 mm light pipes must not touch.  Keep in step
+# with `leds` in case/s6la8_case.scad.
+[[place]]
+part = "D_PWR"
+at = [54, 4.5]
+rot = 90
+
+[[place]]
+part = "D_USB"
+at = [59, 4.5]
+rot = 90
+
+[[place]]
+part = "D_LED1"
+at = [64, 4.5]
+rot = 90
+
+[[place]]
+part = "D_LED2"
+at = [69, 4.5]
+rot = 90
+
+[[place]]
+part = "R_LED_PWR"
+at = [54, 7.5]
+rot = 90
+
+[[place]]
+part = "R_LED_USB"
+at = [59, 7.5]
+rot = 90
+
+[[place]]
+part = "R_LED1"
+at = [64, 7.5]
+rot = 90
+
+[[place]]
+part = "R_LED2"
+at = [69, 7.5]
+rot = 90
+
+# ------------------------------------------------------------------ copper
+# FPGA core supply: a 1.2 V island in the 3.3 V plane, under the FPGA body
+[[zone]]
+net = "VCC_1V2"
+layer = "In2.Cu"
+rect = [41.5, 17.5, 58.5, 34.5]
+priority = 1
+
+[route]
+passes = 25
+via = [0.45, 0.2]
+fanout_width = 0.25
+clearance = 0.15
+
+# ------------------------------------------------------------------ USB 2.0 pair, routed by hand
+# 0.26 mm / 0.15 mm gap on the outer layers of JLC04161H-7628 (0.21 mm prepreg)
+# is about 90 ohm differential.  F.Cu out of the FX2, B.Cu over the 3.3 V
+# plane along the bottom edge, F.Cu again into the ESD clamp.
+[[pair]]
+nets = ["USB_D_P", "USB_D_N"]
+width = 0.26
+gap = 0.15
+layer = "F.Cu"
+via_pitch = 0.75
+path = [[56.635, 58.0], [56.635, 59.75, "via"], [56.635, 61.6], [78.0, 61.6],
+        [80.5, 59.1], [80.5, 48.0, "via"], [80.5, 46.0], [82.0, 46.0]]
+
+# clamp to connector.  The USB-C pads alternate D+ D- D+ D- (B6 A7 A6 B7):
+# D+ joins B6 round the right-hand end of A7, D- reaches B7 through two vias.
+[[track]]
+net = "USB_D_P"
+layer = "F.Cu"
+width = 0.2
+points = [[87.14, 46.95], [89.25, 46.95], [89.95, 46.25], [91.82, 46.25]]
+
+[[track]]
+net = "USB_D_P"
+layer = "F.Cu"
+width = 0.16
+points = [[91.82, 46.25], [92.35, 46.25], [92.66, 45.94], [92.66, 45.56], [92.35, 45.25], [91.82, 45.25]]
+
+[[track]]
+net = "USB_D_N"
+layer = "F.Cu"
+width = 0.2
+points = [[87.14, 45.05], [89.25, 45.05], [89.95, 45.75], [91.82, 45.75]]
+vias = [[89.25, 45.05]]
+
+[[track]]
+net = "USB_D_N"
+layer = "B.Cu"
+width = 0.2
+points = [[89.25, 45.05], [89.25, 45.4], [90.75, 46.9]]
+vias = [[90.75, 46.9]]
+
+[[track]]
+net = "USB_D_N"
+layer = "F.Cu"
+width = 0.16
+points = [[90.75, 46.9], [90.9, 46.75], [91.82, 46.75]]
+
+# the clamp's VBUS pin sits between the two lines: out through a via
+[[track]]
+net = "VBUS"
+layer = "F.Cu"
+width = 0.4
+points = [[84.86, 46.0], [83.6, 46.0]]
+vias = [[83.6, 46.0]]

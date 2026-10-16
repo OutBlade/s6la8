@@ -6,7 +6,8 @@
 # Result: s6la8-fpga.bin (raw bitstream for upload) and a timing summary.
 PART := xc6slx9-2-tqg144
 TOP  := top
-RTL  := $(addprefix ../rtl/,top.v clkgen.v capture.v afifo.v fx2_sfifo.v spi_regs.v dna_auth.v)
+RTL  := $(addprefix ../rtl/,top.v clkgen.v capture.v afifo.v fx2_sfifo.v spi_regs.v dna_auth.v \
+          sync_fifo.v sdram_ctrl.v ring_sdram.v ring_bram.v)
 # PRODUCTION=1 builds with the secret key in ../rtl/auth_key.vh (tools/provision.py
 # keyfile); such a bitstream only captures on provisioned boards.
 PRODUCTION ?= 0

@@ -2,7 +2,7 @@
 // Behavioural model of the Spartan-6 DNA_PORT primitive (UG380, chapter 4):
 // READ loads the 57-bit DNA, SHIFT shifts it towards DOUT, MSB first.
 module DNA_PORT #(
-    parameter [56:0] SIM_DNA_VALUE = 57'h0123456789abcdef
+    parameter [56:0] SIM_DNA_VALUE = 57'h123456789abcdef
 ) (
     input  wire CLK,
     input  wire READ,

@@ -7,8 +7,9 @@
 
 Fit the MODE jumper first (the firmware only writes the EEPROM with it fitted).
 Steps: load the FX2 firmware into RAM, configure the FPGA, read the Device DNA,
-write SipHash(key, DNA) to the EEPROM, ask the FPGA to check it, read back
-the result, run the test-pattern register checks, append a line to the log.
+write SipHash(key, DNA) to the EEPROM, ask the FPGA to check it, capture
+4 M samples of the test pattern through the SDRAM at 100 MS/s and check every
+byte, append a line to the log.
 Exit code 0 means the board passed.
 """
 import argparse
@@ -31,6 +32,10 @@ IN = usb.util.CTRL_TYPE_VENDOR | usb.util.CTRL_IN
 CMD_FW_VERSION, CMD_CONFIG_BEGIN, CMD_CONFIG_END = 0xB0, 0xC0, 0xC1
 CMD_REG_WRITE, CMD_REG_READ, CMD_EEPROM_WRITE, CMD_EEPROM_READ = 0xC2, 0xC3, 0xC6, 0xC7
 REG_ID, REG_AUTH, REG_AUTH_TAG, REG_DNA = 0x00, 0x06, 0x30, 0x38
+REG_CTRL, REG_MEM, REG_DIVIDER, REG_POST, REG_PRE = 0x04, 0x07, 0x08, 0x0C, 0x10
+CMD_ACQUISITION = 0xC4
+CTRL_ARM, CTRL_TESTGEN, CTRL_RESET, CTRL_FORCE = 0x02, 0x04, 0x08, 0x10
+MEMTEST_SAMPLES = 4 << 20               # 4 M samples through the SDRAM at 100 MS/s
 STATUS_DONE = 1
 
 
@@ -120,6 +125,31 @@ def main():
     time.sleep(0.01)
     if not dev.ctrl_transfer(IN, CMD_REG_READ, REG_AUTH, 0, 1)[0] & 2:
         return fail("auth", "FPGA rejected the tag (wrong key or bitstream?)")
+
+    # SDRAM: capture the test pattern at the full rate and check every byte
+    if not dev.ctrl_transfer(IN, CMD_REG_READ, REG_MEM, 0, 1)[0] & 0x80:
+        return fail("sdram", "SDRAM did not initialise")
+    u32 = lambda v: v.to_bytes(4, "little")
+    dev.ctrl_transfer(OUT, CMD_REG_WRITE, REG_CTRL, 0, bytes([CTRL_RESET]))
+    dev.ctrl_transfer(OUT, CMD_ACQUISITION, 1, 0, b"")
+    dev.ctrl_transfer(OUT, CMD_REG_WRITE, REG_MEM, 0, b"")
+    dev.ctrl_transfer(OUT, CMD_REG_WRITE, REG_DIVIDER, 0, u32(0))
+    dev.ctrl_transfer(OUT, CMD_REG_WRITE, REG_PRE, 0, u32(0))
+    dev.ctrl_transfer(OUT, CMD_REG_WRITE, REG_POST, 0, u32(MEMTEST_SAMPLES))
+    dev.ctrl_transfer(OUT, CMD_REG_WRITE, REG_CTRL, 0, bytes([CTRL_ARM | CTRL_TESTGEN | CTRL_FORCE]))
+    data = bytearray()
+    while len(data) < MEMTEST_SAMPLES:
+        try:
+            data += dev.read(0x82, 1 << 16, timeout=3000)
+        except usb.core.USBTimeoutError:
+            break
+    dev.ctrl_transfer(OUT, CMD_ACQUISITION, 0, 0, b"")
+    dev.ctrl_transfer(OUT, CMD_REG_WRITE, REG_CTRL, 0, bytes([CTRL_RESET]))
+    if len(data) < MEMTEST_SAMPLES:
+        return fail("sdram", "only %d of %d bytes came back" % (len(data), MEMTEST_SAMPLES))
+    breaks = sum(1 for i in range(1, MEMTEST_SAMPLES) if data[i] != (data[i - 1] + 1) & 0xFF)
+    if breaks:
+        return fail("sdram", "%d breaks in the test pattern (adjust CLKOUT1_PHASE in clkgen.v?)" % breaks)
 
     result["result"], result["step"] = "PASS", "done"
     print("PASS  DNA %s  serial label: S6LA8-%s" % (result["dna"], result["dna"][-8:].upper()))

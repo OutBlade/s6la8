@@ -18,11 +18,26 @@ module tb_top;
     reg  [7:0] ch = 0;
     reg        flag_full_n = 1;
 
-    top #(.FLUSH(20'd2000)) dut (
+    wire        sd_clk, sd_cke, sd_cs_n, sd_ras_n, sd_cas_n, sd_we_n, sd_dqml, sd_dqmh, sd_ba0, sd_ba1;
+    wire [12:0] sd_a;
+    wire [15:0] sd_dq;
+
+    // A 64 K-sample SDRAM ring keeps the model small; the logic is the same as
+    // for the full 32 M samples.
+    top #(.FLUSH(20'd2000), .SD_SABITS(16), .SD_INIT_WAIT(200)) dut (
         .CLK50(clk), .IFCLK(ifclk), .CH(ch), .EXT_CLK(1'b0), .TRIG(1'b0),
         .FD(fd), .SLWR(slwr_n), .PKTEND(pktend_n), .FLAGA(1'b1), .FLAGB(flag_full_n), .FLAGC(1'b1),
         .CCLK(sck), .REG_MOSI(mosi), .REG_MISO(miso), .REG_CS_N(cs_n),
-        .FPGA_IRQ_N(irq_n), .FB_OE_N(fb_oe_n));
+        .FPGA_IRQ_N(irq_n), .FB_OE_N(fb_oe_n),
+        .SD_CLK(sd_clk), .SD_CKE(sd_cke), .SD_CS_N(sd_cs_n), .SD_RAS_N(sd_ras_n), .SD_CAS_N(sd_cas_n),
+        .SD_WE_N(sd_we_n), .SD_DQML(sd_dqml), .SD_DQMH(sd_dqmh), .SD_BA0(sd_ba0), .SD_BA1(sd_ba1),
+        .SD_A(sd_a), .SD_DQ(sd_dq));
+
+    // FPGA clock-to-pad plus board delay on the SDRAM clock
+    wire #3 sd_clk_d = sd_clk;
+    sdram_model u_sdram (
+        .clk(sd_clk_d), .cke(sd_cke), .cs_n(sd_cs_n), .ras_n(sd_ras_n), .cas_n(sd_cas_n), .we_n(sd_we_n),
+        .ba({sd_ba1, sd_ba0}), .a(sd_a), .dqm({sd_dqmh, sd_dqml}), .dq(sd_dq));
     pullup (slwr_n);
     pullup (pktend_n);
 
@@ -107,6 +122,7 @@ module tb_top;
         $timeformat(-6, 1, " us", 10);
         #2000;
 
+        if (!$test$plusargs("only8")) begin
         // --- 1. identity ---------------------------------------------------
         reg_read(7'h00, b); expect8("ID0", b, 8'h53);
         reg_read(7'h01, b); expect8("ID1", b, 8'h36);
@@ -200,9 +216,86 @@ module tb_top;
         reg_read32(7'h14, w);
         expect8("forced capture byte count", rx_count, w + 512);
 
+        // --- 7. deep capture in SDRAM at 100 MS/s, more than block RAM holds --
+        reg_write(7'h04, 8'h08);
+        #2000; rx_count = 0; committed = 0; fill = 0; drain_gap = 300;
+        reg_read(7'h07, b);
+        expect8("SDRAM ready", b[7], 1);
+        reg_write(7'h07, 8'h01);
+        reg_read(7'h03, b); expect8("depth log2 (SDRAM)", b, 16);
+        reg_write32(7'h08, 32'd0);
+        reg_write32(7'h10, 32'd20001);      // odd counts exercise the byte packing
+        reg_write32(7'h0c, 32'd30001);
+        reg_write32(7'h18, {8'h00, 8'h80, 8'h00, 8'h00});   // bit 7 rising
+        reg_write(7'h28, 8'd0);
+        reg_write(7'h04, 8'h06);
+        wait (irq_n === 1'b0);
+        #3000000;
+        reg_read(7'h05, b);
+        expect8("SDRAM done", b[3], 1);
+        expect8("SDRAM overflow", b[4], 0);
+        reg_read32(7'h14, w);
+        if (w < 20001) begin $display("ERROR: SDRAM trigger position %0d", w); errors = errors + 1; end
+        expect8("SDRAM byte count", rx_count, w + 30001);
+        expect8("SDRAM sample at trigger", rx[w], 8'h80);
+        n = 0;
+        for (i = 1; i < rx_count; i = i + 1)
+            if (rx[i] !== ((rx[i-1] + 8'd1) & 8'hff)) n = n + 1;
+        expect8("SDRAM sequence breaks", n, 0);
+        $display("SDRAM: %0d bytes, trigger at %0d", rx_count, w);
+
+        end else begin
+            fb_oe_n = 1; drain_gap = 300;
+            wait (dut.sd_ready); reg_write(7'h07, 8'h01);
+        end
+
+        $display("%0t test 8 starts", $time); $fflush;
+        // --- 8. SDRAM at 33 MS/s: refresh interleaves with writes, the ring
+        //        wraps, and the pre-trigger data is the newest that fits -------
+        reg_write(7'h04, 8'h08);
+        #2000; rx_count = 0; committed = 0; fill = 0;
+        reg_write32(7'h08, 32'd2);
+        reg_write32(7'h10, 32'd0);
+        reg_write32(7'h0c, 32'd5000);
+        reg_write32(7'h18, {8'h00, 8'hff, 8'h00, 8'h00});   // all bits rising at once: never
+        reg_write(7'h04, 8'h06);
+        #2500000;                            // ~82 K samples: the 64 K ring wraps
+        reg_write(7'h04, 8'h14);
+        wait (irq_n === 1'b0);
+        #3000000;
+        reg_read32(7'h14, w);
+        expect8("wrapped trigger position", w, 65536 - 16 - 5000);
+        expect8("wrapped byte count", rx_count, w + 5000);
+        n = 0;
+        for (i = 1; i < rx_count; i = i + 1)
+            if (rx[i] !== ((rx[i-1] + 8'd1) & 8'hff)) n = n + 1;
+        expect8("wrapped sequence breaks", n, 0);
+        reg_write(7'h07, 8'h00);
+        expect8("SDRAM model errors", u_sdram.errors, 0);
+
         if (errors == 0) $display("PASS");
         else $display("FAIL: %0d error(s)", errors);
         $finish;
+    end
+
+    always begin
+        #250000;
+        if ($test$plusargs("trace"))
+            $display("%0t cap %0d armed %b trig %b done %b filled %0d | ring writing %b flushing %b settle %0d wf %0d drained %b playing %b rreq %b remain %0d rf %0d | ctrl %0d idle %b inflight %0d ref_due %b",
+                $time, dut.u_cap.state, dut.u_cap.armed, dut.u_cap.triggered, dut.u_cap.done, dut.u_cap.filled,
+                dut.u_sdram.writing, dut.u_sdram.flushing, dut.u_sdram.settle, dut.u_sdram.wf_count, dut.u_sdram.drained,
+                dut.u_sdram.playing, dut.u_sdram.rreq, dut.u_sdram.remain, dut.u_sdram.rf_count,
+                dut.u_sdram.u_ctrl.state, dut.u_sdram.ctrl_idle, dut.u_sdram.u_ctrl.inflight, dut.u_sdram.u_ctrl.ref_due);
+        $fflush;
+    end
+
+    integer last_err = 0;
+    always @(posedge clk) if (u_sdram.errors != last_err) begin
+        last_err = u_sdram.errors;
+        $display("  controller: state %0d ref_cnt %0d ref_due %b wait %0d bursting %b wmode %b rmode %b inflight %0d since_act %0d",
+            dut.u_sdram.u_ctrl.state, dut.u_sdram.u_ctrl.ref_cnt, dut.u_sdram.u_ctrl.ref_due, dut.u_sdram.u_ctrl.wait_cnt,
+            dut.u_sdram.u_ctrl.bursting, dut.u_sdram.u_ctrl.wmode, dut.u_sdram.u_ctrl.rmode, dut.u_sdram.u_ctrl.inflight,
+            dut.u_sdram.u_ctrl.since_act);
     end
 
     initial begin

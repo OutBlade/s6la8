@@ -2,15 +2,15 @@
 // Sampling, triggering and capture control.
 //
 // Stream mode pushes every sample straight to the output FIFO and stops with
-// the overflow flag set if the FIFO is full.  Buffer mode records into a
-// block-RAM ring, waits for the trigger sequence, records `post` more
-// samples and then replays the ring, oldest sample first.
-module capture #(
-    parameter ABITS = 15              // ring depth = 2**ABITS samples
-) (
+// the overflow flag set if the FIFO is full.  Buffer mode records into a ring
+// (block RAM or SDRAM, chosen by the caller through the mem_* ports), waits
+// for the trigger sequence, records `post` more samples and then replays the
+// ring, oldest sample first.
+module capture (
     input  wire        clk,
     input  wire        rst,
     input  wire [7:0]  probe,         // already synchronised to clk
+    input  wire [31:0] depth,         // usable ring depth in samples
 
     input  wire        run_stream,
     input  wire        arm,           // pulse: start a buffered capture
@@ -29,10 +29,23 @@ module capture #(
 
     output reg  [7:0]  out = 0,
     output reg         out_wr = 1'b0,
-    input  wire        out_full
-);
-    localparam [31:0] DEPTH = 32'd1 << ABITS;
+    input  wire        out_full,
 
+    // ring buffer
+    output reg         mem_start = 1'b0,
+    output reg         mem_wr = 1'b0,
+    output reg  [7:0]  mem_wdata = 0,
+    output reg         mem_stop = 1'b0,
+    input  wire        mem_drained,
+    input  wire        mem_overflow,
+    output reg         mem_play = 1'b0,
+    output reg  [31:0] mem_play_addr = 0,
+    output reg  [31:0] mem_play_len = 0,
+    input  wire [7:0]  mem_q,
+    input  wire        mem_q_valid,
+    output wire        mem_q_rd,
+    input  wire        mem_play_done
+);
     // ---------------------------------------------------------- sample tick
     reg [31:0] divcnt = 0;
     reg        tick = 1'b0;
@@ -58,41 +71,40 @@ module capture #(
                  ((~s_prev & s & t_rise) == t_rise) &&
                  ((s_prev & ~s & t_fall) == t_fall);
 
-    // ---------------------------------------------------------- ring buffer
-    reg [7:0] ring [0:(1<<ABITS)-1];
-    reg [ABITS-1:0] wptr = 0, rptr = 0;
-    reg [7:0]       ring_q = 0, ring_d = 0;
-    reg             ring_we = 1'b0;
-    always @(posedge clk) begin
-        if (ring_we) ring[wptr] <= ring_d;
-        ring_q <= ring[rptr];
-    end
-
+    // ---------------------------------------------------------- control
     localparam IDLE = 3'd0, FILL = 3'd1, WAIT = 3'd2, POST = 3'd3,
-               PLAY = 3'd4, PLAY2 = 3'd5;
+               DRAIN = 3'd4, PLAY = 3'd5, PLAY2 = 3'd6;
     reg [2:0]  state = IDLE;
-    reg [31:0] filled = 0, remain = 0, replay = 0;
-    reg        q_valid = 1'b0;
+    reg [31:0] filled = 0, remain = 0, wptr = 0;
+    reg        rec = 1'b0;                 // write the current sample
+    reg [7:0]  s_rec = 0;
 
     // Pre-trigger samples that still fit beside `post` in the ring.
-    wire [31:0] room_pre = (post >= DEPTH) ? 32'd0 : (DEPTH - post);
+    wire [31:0] room_pre = (post >= depth) ? 32'd0 : (depth - post);
     wire [31:0] keep_pre = (filled < room_pre) ? filled : room_pre;
-    wire [31:0] total    = (trigpos + post > DEPTH) ? DEPTH : (trigpos + post);
+    wire [31:0] total    = (trigpos + post > depth) ? depth : (trigpos + post);
+
+    assign mem_q_rd = (state == PLAY2) && !out_full && !out_wr;
 
     always @(posedge clk) begin
-        out_wr  <= 1'b0;
-        ring_we <= 1'b0;
-        ring_d  <= s;                      // s may change every cycle at full rate
-        if (ring_we) wptr <= wptr + 1'b1;
+        out_wr    <= 1'b0;
+        mem_start <= 1'b0;
+        mem_stop  <= 1'b0;
+        mem_play  <= 1'b0;
+        mem_wr    <= rec;
+        s_rec     <= s;                    // s may change every cycle at full rate
+        mem_wdata <= s_rec;                // the sample that set `rec`
+        rec       <= 1'b0;
+        if (mem_wr) wptr <= wptr + 1'b1;
 
         if (rst) begin
             state <= IDLE; armed <= 1'b0; triggered <= 1'b0; done <= 1'b0;
-            overflow <= 1'b0; stage <= 0; q_valid <= 1'b0;
+            overflow <= 1'b0; stage <= 0;
         end else case (state)
         IDLE: begin
             if (arm) begin
                 state <= FILL; armed <= 1'b1; triggered <= 1'b0; done <= 1'b0;
-                overflow <= 1'b0; filled <= 0; stage <= 0; wptr <= 0;
+                overflow <= 1'b0; filled <= 0; stage <= 0; wptr <= 0; mem_start <= 1'b1;
             end else if (run_stream && tick && !overflow) begin
                 if (out_full) overflow <= 1'b1;
                 else begin out <= s; out_wr <= 1'b1; end
@@ -102,8 +114,8 @@ module capture #(
         end
         FILL: begin                        // collect the pre-trigger minimum
             if (tick) begin
-                ring_we <= 1'b1;
-                filled  <= filled + 1'b1;
+                rec    <= 1'b1;
+                filled <= filled + 1'b1;
             end
             if (filled >= pre) state <= WAIT;
         end
@@ -113,39 +125,41 @@ module capture #(
                 triggered <= 1'b1;
                 trigpos   <= keep_pre;
                 if (tick && post != 0) begin
-                    ring_we <= 1'b1;
-                    remain  <= post - 1'b1;
+                    rec    <= 1'b1;
+                    remain <= post - 1'b1;
                 end else begin
-                    remain  <= post;
+                    remain <= post;
                 end
                 state <= POST;
             end else if (tick) begin
-                ring_we <= 1'b1;
-                if (filled < DEPTH) filled <= filled + 1'b1;
+                rec <= 1'b1;
+                if (filled < depth) filled <= filled + 1'b1;
                 if (match) stage <= stage + 1'b1;
             end
         end
         POST: begin
-            if (remain == 0) state <= PLAY;
-            else if (tick) begin
-                ring_we <= 1'b1;
-                remain  <= remain - 1'b1;
+            if (remain == 0) begin
+                if (!rec && !mem_wr) begin mem_stop <= 1'b1; state <= DRAIN; end
+            end else if (tick) begin
+                rec    <= 1'b1;
+                remain <= remain - 1'b1;
             end
         end
-        PLAY: if (!ring_we) begin          // wptr has settled
-            replay  <= total;
-            rptr    <= wptr - total[ABITS-1:0];
-            q_valid <= 1'b0;
-            state   <= PLAY2;
+        DRAIN: if (!mem_stop && mem_drained) begin
+            if (mem_overflow) overflow <= 1'b1;
+            state <= PLAY;
+        end
+        PLAY: begin
+            mem_play      <= 1'b1;
+            mem_play_addr <= wptr - total;
+            mem_play_len  <= total;
+            state         <= PLAY2;
         end
         PLAY2: begin
-            if (replay == 0) begin
+            if (mem_q_rd && mem_q_valid) begin
+                out <= mem_q; out_wr <= 1'b1;
+            end else if (!mem_play && mem_play_done) begin
                 done <= 1'b1; armed <= 1'b0; state <= IDLE;
-            end else if (!q_valid) begin
-                q_valid <= 1'b1;           // ring_q holds ring[rptr] next cycle
-            end else if (!out_full && !out_wr) begin
-                out <= ring_q; out_wr <= 1'b1;
-                rptr <= rptr + 1'b1; replay <= replay - 1'b1; q_valid <= 1'b0;
             end
         end
         default: state <= IDLE;

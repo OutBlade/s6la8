@@ -57,3 +57,4 @@ gateware/rtl/auth_key.vh
 *.key
 case/build/
 hardware/release/*/gerbers/
+gateware/build2/

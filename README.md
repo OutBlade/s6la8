@@ -20,7 +20,7 @@ so **build and test prototypes before ordering a batch** (see
 | Manufacturing package (`hardware/release.py`) | Gerbers, drill, JLCPCB BOM and pick-and-place, STEP, schematic and assembly PDFs, fab notes. Refuses to build unless DRC is clean |
 | Enclosure (`case/`) | Printable tray and lid (OpenSCAD), checked against KiCad's 3D model of the populated board: no collisions. Not yet printed |
 | FX2 firmware (`firmware/`) | Compiles with SDCC (4.0 KB of code). Never run |
-| FPGA gateware (`gateware/`) | Streaming, 32 K-sample triggered buffer and board authentication pass simulation; Verilator lint clean. **No ISE build yet**, so pinout and timing are unverified. The SDRAM deep buffer is not implemented |
+| FPGA gateware (`gateware/`) | Streaming, triggered capture into block RAM (32 K samples) or SDRAM (32 M samples), and board authentication pass simulation, the SDRAM against a model that checks the datasheet timing; Verilator lint clean; Yosys estimate 45 % of the LUTs. **No ISE build yet**, so pinout and timing are unverified |
 | libsigrok driver (`host/driver/`) | Compiles against libsigrok. Never run against a device |
 | Production tools (`tools/`) | Key generation, per-board provisioning and end-of-line test. Never run against a device |
 
@@ -38,7 +38,8 @@ generated sheet (2.7 x 1 m), best read zoomed in on screen.
 - XC6SLX9 samples, triggers (four stages, level and edge) and buffers.
 - FX2LP carries data over USB 2.0 high speed in synchronous slave-FIFO mode,
   loads the FPGA bitstream (slave serial) and gives the host register access.
-- 256 Mbit SDRAM footprint for a deep buffer (gateware pending).
+- 256 Mbit SDRAM as a 32 M-sample deep buffer at up to 100 MS/s; the
+  driver uses it automatically for captures over 32 K samples.
 - Fallback: a 74LVC245 copies the buffered probes onto FX2 port B, so the
   board is intended to work as a plain 24 MS/s `fx2lafw` analyzer with any
   released sigrok, with the FPGA unconfigured.

@@ -30,7 +30,7 @@ module tb_auth;
 
     initial begin
         wait (dna_valid);
-        if (dna !== 57'h0123456789abcdef) begin
+        if (dna !== 57'h123456789abcdef) begin
             $display("FAIL: read DNA %h", dna);
             $finish;
         end

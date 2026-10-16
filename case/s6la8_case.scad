@@ -46,7 +46,7 @@ jumpers = [ // [KiCad X0, X1, Y, label]
     [116.0, 121.08, 117.0, "VREF  TGT | 3V3"],
     [130.0, 132.54, 120.5, "MODE"]];
 leds = [ // [KiCad X, Y, label]
-    [190.0, 97.0, "PWR"], [158.55, 103.44, "USB"], [131.49, 87.98, "RUN"], [140.37, 100.29, "ERR"]];
+    [154.0, 64.5, "PWR"], [159.0, 64.5, "USB"], [164.0, 64.5, "RUN"], [169.0, 64.5, "ERR"]];  // status row along the top edge
 probe_rows = [ // KiCad Y of each pin pair (signal row on top, ground row below), label
     [92.0, "0"], [89.46, "1"], [86.92, "2"], [84.38, "3"], [81.84, "4"],
     [79.3, "5"], [76.76, "6"], [74.22, "7"], [71.68, "VR"], [69.14, "CK"]];

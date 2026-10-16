@@ -82,7 +82,7 @@ static int reg_write32(const struct sr_dev_inst *sdi, uint8_t addr, uint32_t v)
 
 SR_PRIV int s6la8_fpga_upload(const struct sr_dev_inst *sdi)
 {
-	uint8_t auth;
+	uint8_t auth, mem;
 	struct drv_context *drvc = sdi->driver->context;
 	struct sr_usb_dev_inst *usb = sdi->conn;
 	struct dev_context *devc = sdi->priv;
@@ -147,8 +147,15 @@ SR_PRIV int s6la8_fpga_upload(const struct sr_dev_inst *sdi)
 		return SR_ERR;
 	}
 
-	sr_info("FPGA gateware version %d, buffer %" PRIu64 " samples.",
-		id[2], devc->depth);
+	/* The SDRAM initialises within a millisecond of configuration. */
+	g_usleep(2 * 1000);
+	if (s6la8_reg_read(sdi, REG_MEM, &mem, 1) == SR_OK && (mem & MEM_SDRAM_READY))
+		devc->sdram_depth = SDRAM_DEPTH;
+	else
+		devc->sdram_depth = 0;
+
+	sr_info("FPGA gateware version %d, buffer %" PRIu64 " samples "
+		"(SDRAM %" PRIu64 ").", id[2], devc->depth, devc->sdram_depth);
 	return SR_OK;
 }
 
@@ -256,14 +263,20 @@ SR_PRIV int s6la8_start(const struct sr_dev_inst *sdi)
 	gboolean have_trigger;
 	uint64_t pre, post;
 
+	uint64_t max_depth = MAX(devc->depth, devc->sdram_depth);
+	gboolean use_sdram;
+
 	devc->buffered = !devc->continuous && devc->limit_samples > 0 &&
-		devc->limit_samples <= devc->depth;
+		devc->limit_samples <= max_depth;
+	use_sdram = devc->buffered && devc->limit_samples > devc->depth;
 	if (!devc->buffered && devc->samplerate > MAX_STREAM_RATE) {
 		sr_err("Streaming is limited to %" PRIu64 " Hz; set a sample "
 			"limit of at most %" PRIu64 " for faster rates.",
-			(uint64_t)MAX_STREAM_RATE, devc->depth);
+			(uint64_t)MAX_STREAM_RATE, max_depth);
 		return SR_ERR_ARG;
 	}
+	if (reg_write8(sdi, REG_MEM, use_sdram ? MEM_SDRAM : 0) != SR_OK)
+		return SR_ERR;
 
 	if (reg_write8(sdi, REG_CTRL, CTRL_RESET) != SR_OK ||
 	    ctrl_out(sdi, CMD_ACQUISITION, 1, NULL, 0) != SR_OK ||
@@ -294,7 +307,7 @@ SR_PRIV int s6la8_start(const struct sr_dev_inst *sdi)
 	} else {
 		if (sr_session_trigger_get(sdi->session))
 			sr_warn("Triggers need a sample limit of at most %"
-				PRIu64 "; ignored while streaming.", devc->depth);
+				PRIu64 "; ignored while streaming.", max_depth);
 		devc->trigger_sent = TRUE;
 		if (reg_write8(sdi, REG_CTRL, CTRL_STREAM) != SR_OK)
 			return SR_ERR;

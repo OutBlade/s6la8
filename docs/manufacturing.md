@@ -102,6 +102,8 @@ Not done yet, in this order:
 2. Five prototypes: rails, current draw, USB high-speed enumeration, FPGA
    configuration, DNA readout and provisioning, fallback mode with stock
    sigrok, 10 minutes of streaming the test pattern without errors, a
+   32 M-sample SDRAM capture of the test pattern at 100 MS/s without a
+   sequence break (if it fails, adjust CLKOUT1_PHASE in clkgen.v), a
    triggered capture of a known signal at 1.8 V, 3.3 V and 5 V.
 3. Fit check of the printed case on a real board (`case/`).
 4. EMC pre-scan with the case.

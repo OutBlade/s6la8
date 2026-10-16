@@ -61,6 +61,10 @@
 #define REG_ID1			0x01
 #define REG_VERSION		0x02
 #define REG_DEPTH_LOG2		0x03
+#define REG_MEM			0x07	/* bit0 buffer in SDRAM, bit7 SDRAM ready */
+#define MEM_SDRAM		(1 << 0)
+#define MEM_SDRAM_READY		(1 << 7)
+#define SDRAM_DEPTH		((1ULL << 25) - 16)
 #define REG_CTRL		0x04
 #define REG_STATUS		0x05
 #define REG_AUTH		0x06	/* bit0 DNA read, bit1 ok, bit2 busy, bit3 required */
@@ -91,7 +95,8 @@ struct dev_context {
 	uint64_t capture_ratio;
 	gboolean continuous;
 
-	uint64_t depth;			/* samples in the hardware buffer */
+	uint64_t depth;			/* samples in the block-RAM buffer */
+	uint64_t sdram_depth;		/* samples in the SDRAM buffer, 0 if none */
 	gint64 fw_updated;
 
 	gboolean buffered;		/* current acquisition mode */

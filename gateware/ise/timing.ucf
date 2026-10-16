@@ -16,3 +16,26 @@ NET "FLAGB"  OFFSET = IN 11.3 ns VALID 20.8 ns BEFORE "IFCLK";
 # The two clock domains only meet in the asynchronous FIFO.
 TIMESPEC "TS_cdc_a" = FROM "clk50" TO "ifclk" TIG;
 TIMESPEC "TS_cdc_b" = FROM "ifclk" TO "clk50" TIG;
+
+# SDRAM (MT48LC16M16A2-6A, CL3 at 100 MHz).  SD_CLK is the system clock
+# inverted, forwarded through an ODDR2, so commands and write data launched on
+# the rising edge reach the SDRAM half a period before it samples them: keep
+# them in the I/O registers and check their skew against SD_CLK.  Read data is
+# captured by clk_sdrd (the PLL's 225-degree copy, clkgen.v); the timing report
+# is checked on hardware, see below.
+INST "u_sdram/u_ctrl/sd_cs_n"     IOB = TRUE;
+INST "u_sdram/u_ctrl/sd_ras_n"    IOB = TRUE;
+INST "u_sdram/u_ctrl/sd_cas_n"    IOB = TRUE;
+INST "u_sdram/u_ctrl/sd_we_n"     IOB = TRUE;
+INST "u_sdram/u_ctrl/sd_a_*"      IOB = TRUE;
+INST "u_sdram/u_ctrl/sd_ba_*"     IOB = TRUE;
+INST "u_sdram/u_ctrl/sd_dqm_*"    IOB = TRUE;
+INST "u_sdram/u_ctrl/sd_dq_out_*" IOB = TRUE;
+INST "sd_dq_in_*"                 IOB = TRUE;
+TIMEGRP "sdram_out" = PADS("SD_A<*>" "SD_BA0" "SD_BA1" "SD_CS_N" "SD_RAS_N" "SD_CAS_N" "SD_WE_N" "SD_DQML" "SD_DQMH" "SD_DQ<*>");
+TIMEGRP "sdram_out" OFFSET = OUT AFTER "CLK50" REFERENCE_PIN "SD_CLK" RISING;
+# Read data is sampled 1.25 ns after the falling edge of the system clock;
+# for a clock-to-SDRAM delay of 1.5 to 4.5 ns that leaves at least 1 ns of
+# setup and hold inside the 7.3 ns window (tCK - tAC + tOH).  Confirm on the
+# first boards with the SDRAM capture test at 100 MS/s; if words are lost,
+# move CLKOUT1_PHASE in clkgen.v by 22.5-degree steps.
